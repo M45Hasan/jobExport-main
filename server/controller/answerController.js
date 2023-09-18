@@ -164,21 +164,30 @@ const createAnswer = async (req, res) => {
 
 const resultPulish = async (req, res) => {
   const { examTrack, examineeId } = req.body;
+  console.log(examTrack, examineeId);
+
   try {
-    const answers = await Answer.find({ exampaperid: examTrack, examineeId });
-    const use = await User.findOne({ _id: examineeId });
+    const answers = await Answer.find({ exampaperid: examTrack, examineeId:examineeId });
+    console.log("ans",answers)
+    const user = await User.findOne({ _id: examineeId });
+    console.log("user",user)
+
+    if (!answers || !user) {
+      return res.status(404).json({ message: "Answers or user not found" });
+    }
 
     let rightMarks = 0;
     let rightCount = 0;
     let wrongMarks = 0;
     let wrongCount = 0;
+    let comment = "";
 
     for (const answer of answers) {
       const question = await Question.findOne({
         examTrack: examTrack,
         serial: answer.serial,
       });
- 
+
       if (question) {
         if (answer.answer === question.rightAnsOne) {
           rightMarks += question.rightMark;
@@ -205,7 +214,7 @@ const resultPulish = async (req, res) => {
       comment = "Keep pushing & Try ...";
     }
 
-    const mx = await Paper.findOneAndUpdate(
+    const updatedPaper = await Paper.findOneAndUpdate(
       { examineeId },
       {
         $set: {
@@ -222,11 +231,12 @@ const resultPulish = async (req, res) => {
       { new: true }
     );
 
-    console.log("Hello",mx);
+    console.log("Hello", updatedPaper);
 
-    res.status(200).send(mx);
+    res.status(200).json(updatedPaper);
   } catch (error) {
-    res.status(500).json({ error: error.code });
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
   }
 };
 
