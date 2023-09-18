@@ -152,8 +152,10 @@ const packageBuyer = async (req, res) => {
       myExam: { $nin: [free?._id] },
     });
     console.log(searchUse);
-    console.log(free?._id); // Changed from free[0]._id
-
+    console.log(free?._id);
+    if (!searchUse) {
+     return res.status(400).json({ error: "You have already" });
+    }
     if (search && searchUser) {
       await ExamPackage.findOneAndUpdate(
         { packageUid },
