@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.swiper-button-prev,
+.swiper-button-next {
+  color: #fff !important;
+  padding: 30px !important;
+}
+.react-tabs__tab--selected {
+  color: #ffffff !important;
+  overflow: hidden !important;
+  background: #26a4de !important;
+}
+.rdw-editor-main {
+  border: 1px solid black;
+  margin-bottom: 50px;
+}
+ol {
+  list-style-type: decimal;
+}
+
+li {
+  font-size: 24px !important;
+  font-weight: 500 !important;
+}
+.inlinex {
+  font-size: 24px !important;
+  font-weight: 500 !important;
+}
+.list2 li {
+  list-style: none;
+}
+
+/* CSS for the left side */
+.left-side {
+  float: left;
+  width: 50%;
+}
+
+/* CSS for the right side */
+.right-side {
+  float: right;
+  width: 50%;
+}
+
+/* Clear the float to prevent layout issues */
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style for the question content (you can customize as needed) */
+.question-content {
+  background-color: #fff;
+  margin-left: 2%;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.question-content h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Style for radio options (customize as needed) */
