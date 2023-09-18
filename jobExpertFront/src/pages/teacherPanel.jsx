@@ -249,7 +249,7 @@ export default function TeacherPanel() {
                 )}
                 <TextField
                   marginTop="10px"
-                  label="Package Titel"
+                  label="Name Of the Exam"
                   name="packageName"
                   fullWidth
                   onChange={handetype}
@@ -258,7 +258,7 @@ export default function TeacherPanel() {
                   <p className="text-[red] text-lg">{error.packageDetail}</p>
                 )}
                 <TextField
-                  label="Package Discription "
+                  label="Syllabus"
                   name="packageDetail"
                   fullWidth
                   onChange={handetype}
