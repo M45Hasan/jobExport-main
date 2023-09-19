@@ -28,6 +28,7 @@ const {
   packageDelete,
   categoryWiseTodayExam,
   selectExamByUser,
+  waitingResult
 } = require("../../controller/examPackageController");
 
 // const { examCreate, deleteExam } = require("../../controller/examController");
@@ -114,6 +115,7 @@ _.post("/packagedelete", packageDelete);
 _.post("/categorywise", categoryWiseTodayExam);
 
 _.post("/examtopaper/:id", selectExamByUser);
+_.get("/wait-for-result", waitingResult);
 
 //exam question Header api
 // _.post("/examheader", examCreate);
