@@ -390,6 +390,21 @@ const waitingResult = async (req, res) => {
     res.status(500).json({ error: "An error occurred" });
   }
 };
+const publishBoolean = async (req, res) => {
+  const { id } = req.body;
+  console.log(id);
+  try {
+    const how = await ExamPackage.findByIdAndUpdate(
+      { _id: id },
+      { $set: { publish: true } },
+      { new: true }
+    );
+
+    res.status(202).send(how);
+  } catch (error) {
+    res.status(500).json({ error: "Error Occurs" });
+  }
+};
 
 module.exports = {
   packageCreateController,
@@ -405,4 +420,5 @@ module.exports = {
   categoryWiseTodayExam,
   selectExamByUser,
   waitingResult,
+  publishBoolean,
 };

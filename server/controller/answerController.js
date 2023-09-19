@@ -227,7 +227,7 @@ const resultPulish = async (req, res) => {
           show: true,
           rightmark: rightMarks,
           wrongmark: wrongMarks,
-          percentage: percentage,
+          percentage: isNaN(percentage) ? 0 : parseFloat(percentage),
           coment: comment,
         },
       },
