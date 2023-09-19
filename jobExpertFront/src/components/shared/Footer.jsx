@@ -66,18 +66,18 @@ const Footer = () => {
               >
                 <Icon icon="ph:phone" width={25} />
                 <p className="transform hover:translate-x-2 duration-300 ">
-                  +880 1700-000000
+                  +880 1521575970
                 </p>
               </a>
             </li>
             <li>
               <a
                 className="text-[#FFFFFF] flex items-center gap-3 pt-3"
-                href="tel:+880 1700-000000"
+                href="tel:+880 1521575970"
               >
                 <Icon icon="fontisto:email" width={22} />
                 <p className="transform hover:translate-x-2 duration-300 ">
-                  contact@yourdomain.com
+                  jexpert82@gmail.com
                 </p>
               </a>
             </li>
@@ -89,7 +89,7 @@ const Footer = () => {
               >
                 <Icon icon="mdi:location" width={40} />
                 <p className="transform hover:translate-x-2 duration-300 ">
-                  #House 2/1, #Block-c, Mirpur-2, Dhaka-1216
+                  Dhaka, Bangladesh
                 </p>
               </a>
             </li>
