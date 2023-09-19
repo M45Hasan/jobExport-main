@@ -391,7 +391,6 @@ const waitingResult = async (req, res) => {
   }
 };
 
-
 module.exports = {
   packageCreateController,
   myPackage,

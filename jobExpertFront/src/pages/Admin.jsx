@@ -49,11 +49,8 @@ const Admin = () => {
   }, []);
 
   console.log(can)
-  // const handleProductCli = (product) => {
-  //  ;
-
-  // };
-  for (const item of can) {
+ 
+  
     const handleProductCli = async (product, can) => {
       setPush(product)
       for (const item of can) {
@@ -64,10 +61,7 @@ const Admin = () => {
               examineeId: packageBuyer,
               examTrack: can[0].packageUid
             });
-            // console.log(`packageBuyer: ${packageBuyer}`); result
-            // console.log(can[0].packageUid)
-
-
+           
 
           }
         }
@@ -263,8 +257,8 @@ const Admin = () => {
               <div className="h-[400px] w-[250px] overflow-auto rounded-md shadow-md ml-2 relative">
                 {histo &&
                   histo
-                    .reverse()
-                    .filter((product) => can[0].packageUid === product.packageUid)
+
+                    .filter((product, index) => can[index] && can[index].packageUid === product.packageUid && product.packageBuyer.length !== 0)
                     .map((product) => (
                       <div
                         key={product.id}
@@ -306,6 +300,6 @@ const Admin = () => {
 
     );
   }
-}
+
 
 export default Admin;

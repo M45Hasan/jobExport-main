@@ -167,10 +167,13 @@ const resultPulish = async (req, res) => {
   console.log(examTrack, examineeId);
 
   try {
-    const answers = await Answer.find({ exampaperid: examTrack, examineeId:examineeId });
-    console.log("ans",answers)
+    const answers = await Answer.find({
+      exampaperid: examTrack,
+      examineeId: examineeId,
+    });
+    console.log("ans", answers);
     const user = await User.findOne({ _id: examineeId });
-    console.log("user",user)
+    console.log("user", user);
 
     if (!answers || !user) {
       return res.status(404).json({ message: "Answers or user not found" });
