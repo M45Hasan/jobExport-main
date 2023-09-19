@@ -28,7 +28,8 @@ const {
   packageDelete,
   categoryWiseTodayExam,
   selectExamByUser,
-  waitingResult
+  waitingResult,
+  publishBoolean
 } = require("../../controller/examPackageController");
 
 // const { examCreate, deleteExam } = require("../../controller/examController");
@@ -112,6 +113,7 @@ _.post("/timer", packageTimer);
 _.post("/packagestatus", packageStatus);
 _.post("/packagerepost", packageRepost);
 _.post("/packagedelete", packageDelete);
+_.post("/publish", publishBoolean);
 _.post("/categorywise", categoryWiseTodayExam);
 
 _.post("/examtopaper/:id", selectExamByUser);
