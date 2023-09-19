@@ -6,7 +6,7 @@ const ExamPackage = require("../model/examPackage");
 const Exam = require("../model/examModel");
 const Question = require("../model/questionModel");
 const Answer = require("../model/ansModel");
-const Paper = require("../model/examPaperModel");
+const Paper = require("../model/examPaperModel"); 
 const { mongo } = require("mongoose");
 
 const createExamPaper = async (req, res) => {
@@ -322,6 +322,47 @@ const successStd = async (req, res) => {
   }
 };
 
+
+// const viewResult =async(req,res)=>{
+//   const {cat ,email}=req.body
+//   try {
+
+//     const user = await User.findOne({email})
+//    const sub = await ExamPackage.findOne({})
+
+//     // Find answers for the given user and exam paper
+//     const userAnswers = await Answer.find({
+//       examineeId,
+//       exampaperid,
+//     }).lean();
+
+//     // Find questions for the given exam paper
+//     const questions = await Question.find({
+//       examTrack: exampaperid,
+//     }).lean();
+
+//     // Match answers with questions and extract selected options
+//     const matchedAnswers = userAnswers.map((userAnswer) => {
+//       const matchedQuestion = questions.find(
+//         (question) => question.serial === userAnswer.serial
+//       );
+
+//       if (!matchedQuestion) {
+//         return null; // Handle if a question is not found
+//       }
+
+//       return {
+//         questionId: matchedQuestion._id,
+//         selectedOption: userAnswer.answer, // Assuming the answer field stores the selected option
+//       };
+//     });
+
+//     res.status(200).json(matchedAnswers.filter(Boolean));
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Server error' });
+//   }
+// }
 module.exports = {
   createExamPaper,
   createAnswer,
