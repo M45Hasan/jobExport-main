@@ -137,8 +137,8 @@ const PremiumZone = () => {
           />
         </div>
 
-        {datax.length !== 0
-          ? (<> {datax.map((item, k) => {
+        {datax?.length !== 0
+          ? (<> {datax?.map((item, k) => {
             const isFutureDate = new Date(item.examDate) > new Date(formattedDate);
             console.log(item.examDate);
 
