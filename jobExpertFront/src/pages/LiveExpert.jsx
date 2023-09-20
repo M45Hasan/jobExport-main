@@ -5,10 +5,11 @@ import JobExpart from "../components/JobExpart/JobExpart";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import noexam from "../assets/brandLogo/noexam1.png";
+import axios from "../components/Axios/axios";
 
 import Button from "@mui/material/Button";
 const LiveExpert = () => {
-  const [datax, setData] = useState([]);
+  const [datax, setData] = useState("");
   const userData = useSelector((state) => state);
   const navigate = useNavigate();
   useEffect(() => {
@@ -54,6 +55,49 @@ const LiveExpert = () => {
       setIsExamTime(true);
     }
   }, [todayExam]);
+
+  // match my purchase 
+
+  const id = userData?.userData?.userInfo?.id
+  console.log(todayExam)
+
+  const addExam = async (item) => {
+    console.log(item)
+    try {
+      let data = await axios.post("/jobExpert/api/v1/ssl-request", {
+        packageUid: item.packageUid,
+        email: userData.userData.userInfo.email,
+        nid: item.nid,
+        name: item.name,
+        packageName: item.packageName,
+        examCategory: item.examCategory,
+      });
+
+      if (data.data.url) {
+        window.location.replace(data.data.url);
+
+        console.log("ajaj", data.data.url);
+      }
+
+      console.log(data);
+    } catch (e) {
+      console.log(e.code)
+    }
+  };
+  // add free 
+
+  const addExamm = async (uid) => {
+    try {
+      let data = await axios.post("/jobExpert/api/v1/exampurchase", {
+        packageUid: uid,
+        email: userData.userData.userInfo.email,
+      });
+      console.log("ddd", data);
+
+    } catch (e) {
+      console.log(e.code)
+    }
+  };
   return (
     <>
       {/* banner section  */}
@@ -76,6 +120,8 @@ const LiveExpert = () => {
               key={k}
               className="flex md:flex-row flex-col mb-[20px] md:gap-x-[30px] items-center border border-[#000000] p-[5px] md:p-[20px]"
             >
+
+
               <div className="md:w-[20%] w-[60%]">
                 <img
                   className="w-full "
@@ -105,41 +151,40 @@ const LiveExpert = () => {
                   </div>
 
                   {item.premium == true ? (
-               
-                    <Link to={`examPaper/${item._id}`}>
-                      <button className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg">
+                    todayExam.some(item => item.packageBuyer.includes(id)) ?
+                      <Link to={`examPaper/${item._id}`}>
+                        <button className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg">
+                          <img
+                            src="https://i.ibb.co/H7wjCk9/image-56.png"
+                            alt=""
+                            className="w-5"
+                          />
+                          Start Now
+                        </button>
+                      </Link> :
+                      <button onClick={() => addExam(item)} className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg">
                         <img
                           src="https://i.ibb.co/H7wjCk9/image-56.png"
                           alt=""
                           className="w-5"
                         />
-                        Start Now
+                        Buy Now
                       </button>
-                    </Link>
+
                   ) : (
-                    <Link to={`examPaper/${item._id}`}>
-                      <button className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg">
-                        Start Now
+                    todayExam.some(item => item.packageBuyer.includes(id)) ?
+                      <Link to={`examPaper/${item._id}`}>
+                        <button className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg">
+                          Start Now
+                        </button>
+                      </Link> :
+                      <button onClick={() => addExamm(item.packageUid)} className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg">
+                        Add
                       </button>
-                    </Link>
+
                   )}
 
-                  {/* {isExamTime ? ( 
-                    <Link to={`examPaper/${item._id}`}>
-                      <button className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg">
-                        <img
-                          src="https://i.ibb.co/H7wjCk9/image-56.png"
-                          alt=""
-                          className="w-5"
-                        />
-                        Start Now
-                      </button>
-                    </Link>
-                  ) : (
-                    <button disabled className="bg-gray-400 mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg">
-                      Exam Not Available Yet
-                    </button>
-                  )} */}
+
                 </div>
               </div>
             </div>

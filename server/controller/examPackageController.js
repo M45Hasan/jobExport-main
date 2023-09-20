@@ -250,43 +250,50 @@ const packageStatus = async (req, res) => {
 };
 
 const packageRepost = async (req, res) => {
-  const {
-    packageUid,
-    packageCreaterEmail,
-    packageFee,
-    premium,
-    examTime,
-    examDate,
-  } = req.body;
-  console.log(req.body);
-
+  const { id } = req.body;
+  console.log(req.body)
   try {
-    const search = await ExamPackage.find({
-      packageUid: packageUid,
-      packageCreaterEmail: packageCreaterEmail,
+    const search = await ExamPackage.findById({
+      _id: id,
     });
 
+    const currentDate = new Date();
+const sevenDaysLater = new Date(currentDate);
+
+// Add 7 days to the current date
+sevenDaysLater.setDate(currentDate.getDate() + 7);
+
+// Extract year, month, and day
+const year = sevenDaysLater.getFullYear();
+const month = String(sevenDaysLater.getMonth() + 1).padStart(2, "0");
+const day = String(sevenDaysLater.getDate()).padStart(2, "0");
+
+const formattedDate = `${year}-${month}-${day}`;
+
+console.log(formattedDate);
     const uid = Math.floor(100000 + Math.random() * 90000).toString();
 
     const newPackge = new ExamPackage({
       packageUid: uid,
-      packageName: search[0].packageName,
-      packageDetail: search[0].packageDetail,
-      packageCreater: search[0].packageCreater,
-      packageCreaterEmail: search[0].packageCreaterEmail,
-      packageFee: packageFee,
-      premium: premium,
+      nid:search.nid,
+      packageName: search.packageName,
+      packageDetail: search.packageDetail,
+      packageCreater: search.packageCreater,
+      packageCreaterEmail: search.packageCreaterEmail,
+      packageFee: search.packageFee,
+      premium: search.premium,
+      publish:false,
       packageActive: true,
-      examCategory: search[0].examCategory,
-      examSubCategory: search[0].examSubCategory,
-      qestionList: search[0].qestionList,
-      examMark: search[0].examMark,
-      examInfo: search[0].examInfo,
-      examDuration: search[0].examDuration,
-      examTitle: search[0].examTitle,
-      examSerial: search[0].examSerial,
-      examDate: examDate,
-      examTime: examTime,
+      examCategory: search.examCategory,
+      examSubCategory: search.examSubCategory,
+      qestionList: search.qestionList,
+      examMark: search.examMark,
+      examInfo: search.examInfo,
+      examDuration: search.examDuration,
+      examTitle: search.examTitle,
+      examSerial: search.examSerial,
+      examDate: formattedDate,
+      examTime: search.examTime,
     });
 
     newPackge.save();
@@ -369,7 +376,7 @@ const selectExamByUser = async (req, res) => {
 const waitingResult = async (req, res) => {
   const today = new Date();
   const formattedToday = today.toISOString().split("T")[0];
-  console.log(formattedToday);
+  console.log("todayDate", formattedToday);
 
   try {
     const matchingExams = await ExamPackage.find({
