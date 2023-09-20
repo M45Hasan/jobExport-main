@@ -54,7 +54,7 @@ const GetUnderPackegQution = ({ rander }) => {
 
   const DeletQustion = async (id) => {
     try {
-      let aciton = await axios.post("/jobExpert/api/v1/deletequestion", {
+      await axios.post("/jobExpert/api/v1/deletequestion", {
         id: id,
       });
       getData();
