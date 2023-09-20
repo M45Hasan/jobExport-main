@@ -66,11 +66,11 @@ const deleteQuestion = async (req, res) => {
   console.log(id);
   try {
     const mx = await Question.findOne({ _id: id });
-
+    console.log("mx", mx);
     if (mx) {
-      await ExamPackage.findOneAndUpdate(
-        { examSerial: mx.examTrack },
-        { $pull: { qestionList: { $in: mx._id } } },
+      await ExamPackage.updateOne(
+        { qestionList: mx._id }, // Search by question reference
+        { $pull: { qestionList: mx._id } },
         { new: true }
       );
       await Question.findOneAndDelete({ _id: mx._id });

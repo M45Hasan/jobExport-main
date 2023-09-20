@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "../Axios/axios"; // You'll need to import Axios or use your preferred HTTP library
+import { useSelector } from "react-redux";
 
 const UploadVideo = () => {
+  let selector = useSelector((state) => state);
   const [formData, setFormData] = useState({
-    email: "",
+    email: selector.userData.userInfo.email,
     subject: "",
     text: "",
     title: "",
@@ -75,19 +77,7 @@ const UploadVideo = () => {
       <div className="p-4 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold mb-4">Upload Video</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-600 font-medium mb-2">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="block w-full p-2 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring focus:ring-primary focus:border-primary"
-              required
-            />
-          </div>
+          <div className="mb-4"></div>
           <div className="mb-4">
             <label className="block text-gray-600 font-medium mb-2">
               Subject
@@ -167,7 +157,7 @@ const UploadVideo = () => {
                     title={video.title}
                     width="100%"
                     height="315"
-                    src={`https://www.youtube.com/embed/${video.videoUrl}`}
+                    src={`${video.videoUrl}`}
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
