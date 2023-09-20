@@ -21,7 +21,18 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
 import { useDispatch, useSelector } from "react-redux";
 import { activeUser } from "../userSlice/userSlice";
-import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import {
+  FormControl,
+  FormControlLabel,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
 
 const defaultTheme = createTheme();
 export default function singup() {
@@ -83,6 +94,14 @@ export default function singup() {
       navigate("/jobexpart");
     }
   }, []);
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <>
@@ -150,7 +169,7 @@ export default function singup() {
               {errors.email && (
                 <p className="text-red-500 text-lg">Email/phone is required</p>
               )}
-              <TextField
+              {/* <TextField
                 margin="normal"
                 fullWidth
                 name="pass"
@@ -159,20 +178,62 @@ export default function singup() {
                 onChange={handelInput}
                 id="password"
                 autoComplete="current-password"
-              />
+              /> */}
+              <FormControl fullWidth variant="outlined">
+                <InputLabel htmlFor="outlined-adornment-password">
+                  Password
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  fullWidth
+                  name="pass"
+                  onChange={handelInput}
+                  type={showPassword ? "text" : "password"}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+              </FormControl>
+
               {errors.pass && (
-                <p className="text-red-500 text-lg">Password is required</p>
+                <p className="text-red-500 text-lg ">Password is required</p>
               )}
-              <TextField
-                margin="normal"
-                fullWidth
-                name="pass"
-                label="পূনরায় পাসওয়ার্ড লিখুন"
-                type="password"
-                onChange={handelInput}
-                id="password"
-                autoComplete="current-password"
-              />
+              <div className="mt-2 w-full">
+                <FormControl fullWidth variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">
+                    Confirm Password
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    fullWidth
+                    name="pass"
+                    onChange={handelInput}
+                    type={showPassword ? "text" : "password"}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        ></IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
+              </div>
+
               <RadioGroup
                 aria-label="role"
                 name="role"

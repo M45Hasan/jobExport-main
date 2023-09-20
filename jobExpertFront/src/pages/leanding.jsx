@@ -51,9 +51,7 @@ const leading = () => {
           />
 
           <h3 className="text-center text-lg font-bold py-2">"Live Expert"</h3>
-          <p className="text-center px-2">
-            "Live Exam, Archive, Routine, Syllabus, Merit List etc."
-          </p>
+          <p className="text-center px-2"></p>
         </Link>
         <Link
           to="examZone"
@@ -66,9 +64,7 @@ const leading = () => {
           />
 
           <h3 className="text-center text-lg font-bold py-2">"Exam Zone"</h3>
-          <p className="text-center px-2">
-            "Live Exam, Archive, Routine, Syllabus, Merit List etc."
-          </p>
+          <p className="text-center px-2"></p>
         </Link>
         <Link
           to="video"
@@ -83,9 +79,7 @@ const leading = () => {
           <h3 className="text-center text-lg font-bold py-2">
             "Video Support"
           </h3>
-          <p className="text-center px-2">
-            "Live Exam, Archive, Routine, Syllabus, Merit List etc."
-          </p>
+          <p className="text-center px-2"></p>
         </Link>
         <Link
           to="premiumZone"
@@ -100,9 +94,7 @@ const leading = () => {
           <h3 className="text-center text-lg font-bold py-2">
             "Premium Member"
           </h3>
-          <p className="text-center px-2">
-            "Live Exam, Archive, Routine, Syllabus, Merit List etc."
-          </p>
+          <p className="text-center px-2"></p>
         </Link>
         <Link
           to="pdfSupport"
@@ -115,9 +107,7 @@ const leading = () => {
           />
 
           <h3 className="text-center text-lg font-bold py-2">"Pdf Support"</h3>
-          <p className="text-center px-2">
-            "Live Exam, Archive, Routine, Syllabus, Merit List etc."
-          </p>
+          <p className="text-center px-2"></p>
         </Link>
         <Link
           to="socialMediya"
@@ -132,9 +122,7 @@ const leading = () => {
           <h3 className="text-center text-lg font-bold py-2">
             "Study Communities"
           </h3>
-          <p className="text-center px-2">
-            "Live Exam, Archive, Routine, Syllabus, Merit List etc."
-          </p>
+          <p className="text-center px-2"></p>
         </Link>
       </section>
 

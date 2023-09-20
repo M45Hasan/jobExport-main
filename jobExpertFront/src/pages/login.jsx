@@ -9,19 +9,26 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import { ToastContainer, toast } from "react-toastify";
-
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import "react-toastify/dist/ReactToastify.css";
-
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Navbar from "../components/shared/Navbar";
 import Footer from "../components/shared/Footer";
 import { Link, useNavigate } from "react-router-dom";
-import { Modal } from "@mui/material";
+import {
+  FormControl,
+  IconButton,
+  Input,
+  InputAdornment,
+  InputLabel,
+  Modal,
+  OutlinedInput,
+} from "@mui/material";
 import axios from "../components/Axios/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { activeUser } from "../userSlice/userSlice";
@@ -127,6 +134,7 @@ const login = () => {
     setInfo({ ...info, [name]: value });
     setError({ ...error, [name]: value ? "" : `${name} is requried` });
   };
+  console.log(info);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -245,6 +253,14 @@ const login = () => {
       }
     }
   };
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   return (
     <>
       <Navbar />
@@ -314,7 +330,7 @@ const login = () => {
                   onChange={handelChange}
                 />
 
-                <TextField
+                {/* <TextField
                   margin="normal"
                   required
                   fullWidth
@@ -324,7 +340,33 @@ const login = () => {
                   id="password"
                   onChange={handelChange}
                   autoComplete="current-password"
-                />
+                /> */}
+
+                <FormControl fullWidth variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">
+                    Password
+                  </InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password"
+                    fullWidth
+                    onChange={handelChange}
+                    name="pass"
+                    type={showPassword ? "text" : "password"}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
                 {error && <p className="text-red-600">{error.pass}</p>}
 
                 <Button
@@ -345,18 +387,21 @@ const login = () => {
                   লগ-ইন করুন
                 </Button>
               </Box>
-
+              <div className="flex justify-between items-center">
+                <Link to="/singup" variant="body2">
+                  <p className="font-bold">
+                    Don't have an account?{" "}
+                    <span className="text-[#26A4DE] text-lg"> Sign Up</span>
+                  </p>
+                </Link>
+                <Link onClick={handleOpen} variant="body2">
+                  <p className=" ml-6"> Forgot password? </p>
+                </Link>
+              </div>
               <Box>
                 <Grid container>
-                  <Grid item xs={8} textAlign="left">
-                    <Link to="/singup" variant="body2">
-                      {"Don't have an account? Sign Up"}
-                    </Link>
-                  </Grid>
-                  <Grid item xs={4} textAlign="right">
-                    <Link onClick={handleOpen} variant="body2">
-                      Forgot password?
-                    </Link>
+                  <Grid item xs={8} textAlign="left"></Grid>
+                  <Grid item xs={2} textAlign="right">
                     <div>
                       <Modal
                         open={open}
@@ -491,74 +536,7 @@ const login = () => {
                   alignItems: "center",
                   mt: 5,
                 }}
-              >
-                <Box
-                  sx={{
-                    flex: 1,
-                    width: "200px",
-
-                    border: "1px solid  #808080",
-                  }}
-                ></Box>
-                <Box sx={{ mx: 2 }}>OR</Box>
-                <Box sx={{ flex: 1, border: "1px solid  #808080" }}></Box>
-              </Box>
-            </Box>
-
-            {/* google and facebook login button */}
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                gap: "10px",
-                mt: 2,
-              }}
-            >
-              <Button
-                variant="contained"
-                sx={{
-                  flex: 1,
-                  mt: 3,
-                  mb: 2,
-                  p: 1.5,
-                  backgroundColor: "#FFFFFF",
-                  "&:hover": {
-                    backgroundColor: "#FFFFFF",
-                  },
-                }}
-              >
-                <Box sx={{ width: "100%" }}>
-                  <img src={google} alt="" />
-                </Box>
-              </Button>
-              <Button
-                variant="contained"
-                sx={{
-                  flex: 1,
-                  mt: 3,
-                  mb: 2,
-                  p: 1.5,
-                  backgroundColor: "#FFFFFF",
-                  "&:hover": {
-                    backgroundColor: "#FFFFFF",
-                  },
-                }}
-              >
-                <Box sx={{ width: "100%" }}>
-                  <img src={facebook} alt="" />
-                </Box>
-              </Button>
-            </Box>
-
-            {/* group logo png */}
-
-            <Box sx={{ width: "80%", my: 5, mx: "auto" }}>
-              <img src={logo} alt="" className="mx-auto mt-16" />
-              <div className="flex flex-col md:flex-row justify-center items-center gap-5 mt-5">
-                <img src={appstore} alt="" className="w-40" />
-                <img src={googlestore} alt="" className="w-40" />
-              </div>
+              ></Box>
             </Box>
           </Container>
         </Box>
