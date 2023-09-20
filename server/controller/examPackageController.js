@@ -309,6 +309,11 @@ const packageDelete = async (req, res) => {
         console.log(`Deleted questions for exam ${packSearch.examId}`);
 
         await ExamPackage.deleteOne({ _id: packSearch._id });
+        await User.findOneAndUpdate(
+          { email: packSearch.packageCreaterEmail },
+          { $pull: { examPackageId: packSearch._id } },
+          { new: true }
+        );
         res.status(200).send(deleteResult);
       } catch (error) {
         console.error(
