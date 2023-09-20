@@ -154,7 +154,7 @@ const packageBuyer = async (req, res) => {
     console.log(searchUse);
     console.log(free?._id);
     if (!searchUse) {
-     return res.status(400).json({ error: "You have already" });
+      return res.status(400).json({ error: "You have already" });
     }
     if (search && searchUser) {
       await ExamPackage.findOneAndUpdate(
@@ -366,6 +366,46 @@ const selectExamByUser = async (req, res) => {
   }
 };
 
+const waitingResult = async (req, res) => {
+  const today = new Date();
+  const formattedToday = today.toISOString().split("T")[0];
+  console.log(formattedToday);
+
+  try {
+    const matchingExams = await ExamPackage.find({
+      examDate: { $lt: formattedToday },
+    });
+
+    if (matchingExams.length > 0) {
+      const result = matchingExams.map((exam) => ({
+        packageBuyer: exam.packageBuyer,
+        packageUid: exam.packageUid,
+      }));
+      res.status(200).send(result);
+    } else {
+      res.status(400).json({ message: "No matching exams found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+};
+const publishBoolean = async (req, res) => {
+  const { id } = req.body;
+  console.log(id);
+  try {
+    const how = await ExamPackage.findByIdAndUpdate(
+      { _id: id },
+      { $set: { publish: true } },
+      { new: true }
+    );
+
+    res.status(202).send(how);
+  } catch (error) {
+    res.status(500).json({ error: "Error Occurs" });
+  }
+};
+
 module.exports = {
   packageCreateController,
   myPackage,
@@ -379,4 +419,6 @@ module.exports = {
   packageDelete,
   categoryWiseTodayExam,
   selectExamByUser,
+  waitingResult,
+  publishBoolean,
 };

@@ -6,7 +6,7 @@ const ExamPackage = require("../model/examPackage");
 const Exam = require("../model/examModel");
 const Question = require("../model/questionModel");
 const Answer = require("../model/ansModel");
-const Paper = require("../model/examPaperModel");
+const Paper = require("../model/examPaperModel"); 
 const { mongo } = require("mongoose");
 
 const createExamPaper = async (req, res) => {
@@ -164,21 +164,33 @@ const createAnswer = async (req, res) => {
 
 const resultPulish = async (req, res) => {
   const { examTrack, examineeId } = req.body;
+  console.log(examTrack, examineeId);
+
   try {
-    const answers = await Answer.find({ exampaperid: examTrack, examineeId });
-    const use = await User.findOne({ _id: examineeId });
+    const answers = await Answer.find({
+      exampaperid: examTrack,
+      examineeId: examineeId,
+    });
+    console.log("ans", answers);
+    const user = await User.findOne({ _id: examineeId });
+    console.log("user", user);
+
+    if (!answers || !user) {
+      return res.status(404).json({ message: "Answers or user not found" });
+    }
 
     let rightMarks = 0;
     let rightCount = 0;
     let wrongMarks = 0;
     let wrongCount = 0;
+    let comment = "";
 
     for (const answer of answers) {
       const question = await Question.findOne({
         examTrack: examTrack,
         serial: answer.serial,
       });
- 
+
       if (question) {
         if (answer.answer === question.rightAnsOne) {
           rightMarks += question.rightMark;
@@ -205,7 +217,7 @@ const resultPulish = async (req, res) => {
       comment = "Keep pushing & Try ...";
     }
 
-    const mx = await Paper.findOneAndUpdate(
+    const updatedPaper = await Paper.findOneAndUpdate(
       { examineeId },
       {
         $set: {
@@ -215,18 +227,19 @@ const resultPulish = async (req, res) => {
           show: true,
           rightmark: rightMarks,
           wrongmark: wrongMarks,
-          percentage: percentage,
+          percentage: isNaN(percentage) ? 0 : parseFloat(percentage),
           coment: comment,
         },
       },
       { new: true }
     );
 
-    console.log("Hello",mx);
+    console.log("Hello", updatedPaper);
 
-    res.status(200).send(mx);
+    res.status(200).json(updatedPaper);
   } catch (error) {
-    res.status(500).json({ error: error.code });
+    console.error(error);
+    res.status(500).json({ error: "An error occurred" });
   }
 };
 
@@ -309,6 +322,47 @@ const successStd = async (req, res) => {
   }
 };
 
+
+// const viewResult =async(req,res)=>{
+//   const {cat ,email}=req.body
+//   try {
+
+//     const user = await User.findOne({email})
+//    const sub = await ExamPackage.findOne({})
+
+//     // Find answers for the given user and exam paper
+//     const userAnswers = await Answer.find({
+//       examineeId,
+//       exampaperid,
+//     }).lean();
+
+//     // Find questions for the given exam paper
+//     const questions = await Question.find({
+//       examTrack: exampaperid,
+//     }).lean();
+
+//     // Match answers with questions and extract selected options
+//     const matchedAnswers = userAnswers.map((userAnswer) => {
+//       const matchedQuestion = questions.find(
+//         (question) => question.serial === userAnswer.serial
+//       );
+
+//       if (!matchedQuestion) {
+//         return null; // Handle if a question is not found
+//       }
+
+//       return {
+//         questionId: matchedQuestion._id,
+//         selectedOption: userAnswer.answer, // Assuming the answer field stores the selected option
+//       };
+//     });
+
+//     res.status(200).json(matchedAnswers.filter(Boolean));
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Server error' });
+//   }
+// }
 module.exports = {
   createExamPaper,
   createAnswer,
