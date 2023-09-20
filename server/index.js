@@ -19,4 +19,4 @@ app.listen(process.env.PORT || 5173, () => {
 });
 dbConnect();
 
-app.use(route); 
+app.use(route);

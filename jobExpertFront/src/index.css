@@ -32,23 +32,6 @@ li {
 }
 
 /* CSS for the left side */
-.left-side {
-  float: left;
-  width: 50%;
-}
-
-/* CSS for the right side */
-.right-side {
-  float: right;
-  width: 50%;
-}
-
-/* Clear the float to prevent layout issues */
-.clearfix::after {
-  content: "";
-  display: table;
-  clear: both;
-}
 
 /* Style for the question content (you can customize as needed) */
 .question-content {

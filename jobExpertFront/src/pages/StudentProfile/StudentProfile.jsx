@@ -8,7 +8,8 @@ import StudentTabs from "./StudentTabs";
 
 import { useDispatch, useSelector } from "react-redux";
 import { activeUser } from "../../userSlice/userSlice";
-import  apy  from "../../components/urlBackend"
+import apy from "../../components/urlBackend";
+import { Button } from "@mui/material";
 
 const StudentProfile = () => {
   const [img, setImg] = useState("");
@@ -95,21 +96,19 @@ const StudentProfile = () => {
 
   return (
     <>
-      <div className="grid relative grid-cols-1 md:grid-cols-3 gap-5 justify-items-center items-center mt-16 bg-secondary p-10 w-4/5 mx-auto">
-        { }
+      <div className="grid relative grid-cols-1 md:grid-cols-3 gap-5 justify-items-center items-center mt-16 bg-secondary p-10 w-4/5 mx-auto ">
+        {}
         <div onClick={handleShow}>
           <img
             className=" rounded-full shadow-2xl w-[170px] h-[170px]"
             src={`${apy}/uploads/${userDa.userData.userInfo.userImg[imgx]}`}
           />
-
-       
         </div>
 
         {/* student info  */}
         {hide && (
-          <div className=" w-[5%]   absolute z-20 shadow-2xl   left-[11%] border-gray-700  ">
-            <div className="grid grid-cols-1 relative">
+          <div className=" overflow-x-hidden   absolute z-20 shadow-2xl   left-[11%] border-gray-700">
+            <div className=" flex justify-center flex-col items-center">
               <div className="mt-4  mb-3 ml-auto rounded-sm bg-green-400  text-sm max-w-[181px]">
                 <input
                   placeholder="User image "
@@ -119,11 +118,14 @@ const StudentProfile = () => {
                   onChange={handleImageChangeUser}
                 />
               </div>
-              <div
-                onClick={imageLoad}
-                className="text-center  w-full text-sm font-sans ml-[50%]  rounded-full  shadow-2xl bg-primary cursor-pointer text-red-900 font-semibold  absolute bottom-[-10px]"
-              >
-                Upload
+              <div className="w-full text-center flex justify-center  ">
+                <Button
+                  variant="contained"
+                  onClick={imageLoad}
+                  className="text-center block   text-md font-sans    shadow-2xl  bg-primary cursor-pointer text-black font-semibold   "
+                >
+                  Upload
+                </Button>
               </div>
             </div>
           </div>

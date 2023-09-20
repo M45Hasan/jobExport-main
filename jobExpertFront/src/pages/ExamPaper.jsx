@@ -11,6 +11,8 @@ const ExamPaper = () => {
   const seletor = useSelector((state) => state);
   const [data, setData] = useState({});
 
+  console.log(data);
+
   const [selectedOptions, setSelectedOptions] = useState({});
 
   useEffect(() => {
@@ -136,7 +138,7 @@ const ExamPaper = () => {
         theme="light"
       />
 
-      <div className="w-11/12 md:w-4/5 mx-auto text-left">
+      <div className="w-11/12 md:w-4/5 mx-auto text-left relative">
         {show ? (
           <div className="text-center mx-0">
             <img
@@ -159,14 +161,18 @@ const ExamPaper = () => {
                 {paper.error ? (
                   ""
                 ) : (
-                  <p>
-                    Time Remaining: {Math.floor(timeRemaining / 60)}:
-                    {(timeRemaining % 60).toString().padStart(2, "0")}
-                  </p>
+                  <div className="text-center   absolute top-[1%] md:top-0 right-0 ">
+                    <div className="bg-white w-[80px] h-[80px]  md:w-[150px] md:h-[150px] rounded-full flex items-center justify-center p-4 shadow-md mx-auto max-w-xs border border-[#26A4DE] ">
+                      <p className="md:text-4xl text-lg font-bold mb-4">
+                        {Math.floor(timeRemaining / 60)}:
+                        {(timeRemaining % 60).toString().padStart(2, "0")}
+                      </p>
+                    </div>
+                  </div>
                 )}
               </div>
-              <div className="w-11/12 md:w-4/5 mx-auto text-left clearfix">
-                <div className="left-side">
+              <div className="  text-left flex justify-between md:flex-row flex-col clearfix">
+                <div className="left-side md:w-[50%]">
                   <ul>
                     {data.qestionList?.map((item, index) => {
                       // Render even-numbered questions on the left side
@@ -176,16 +182,20 @@ const ExamPaper = () => {
                             <div
                               className={`w-11/12 md:w-4/5 mx-auto bg-white ml-2 rounded-lg my-4`}
                             >
-                              <h1 className="text-xl font-bold mb-4">
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: item.whatIsTheQuestion,
-                                  }}
-                                ></div>
-                              </h1>
-                              <div className="flex items-center gap-x-4">
+                              <p className="flex item gap-x-4">
+                                <span>{index + 1}</span>
+                                <h1 className="text-xl font-bold mb-4">
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html: item.whatIsTheQuestion,
+                                    }}
+                                  ></div>
+                                </h1>
+                              </p>
+                              <div className="">
                                 <div>
-                                  <div className="flex items-center">
+                                  <div className=" ">
+                                    <span>(ক) </span>
                                     <input
                                       type="radio"
                                       id={`question-option-${index}-optionA`}
@@ -206,13 +216,15 @@ const ExamPaper = () => {
                                           : {}
                                       }
                                     />
+
                                     <label
                                       htmlFor={`question-option-${index}-A`}
                                     >
                                       {item.optionA}
                                     </label>
                                   </div>
-                                  <div className="flex items-center mt-2">
+                                  <div className=" mt-2">
+                                    <span>(খ) </span>
                                     <input
                                       type="radio"
                                       id={`question-option-${index}-optionB`}
@@ -233,6 +245,7 @@ const ExamPaper = () => {
                                           : {}
                                       }
                                     />
+
                                     <label
                                       htmlFor={`question-option-${index}-B`}
                                     >
@@ -242,7 +255,8 @@ const ExamPaper = () => {
                                 </div>
 
                                 <div>
-                                  <div className="flex items-center">
+                                  <div className=" ">
+                                    <span>(গ) </span>
                                     <input
                                       type="radio"
                                       id={`question-option-${index}-optionC`}
@@ -263,6 +277,7 @@ const ExamPaper = () => {
                                           : {}
                                       }
                                     />
+
                                     <label
                                       htmlFor={`question-option-${index}-C`}
                                     >
@@ -270,6 +285,7 @@ const ExamPaper = () => {
                                     </label>
                                   </div>
                                   <div className="flex items-center mt-2">
+                                    <span className="mr-2">(ঘ)</span>
                                     <input
                                       type="radio"
                                       id={`question-option-${index}-optionD`}
@@ -290,6 +306,7 @@ const ExamPaper = () => {
                                           : {}
                                       }
                                     />
+
                                     <label
                                       htmlFor={`question-option-${index}-D`}
                                     >
@@ -306,7 +323,7 @@ const ExamPaper = () => {
                     })}
                   </ul>
                 </div>
-                <div className="right-side">
+                <div className="right-side md:w-[50%]">
                   <ul>
                     {data.qestionList?.map((item, index) => {
                       // Render odd-numbered questions on the right side
@@ -314,18 +331,22 @@ const ExamPaper = () => {
                         return (
                           <li key={index}>
                             <div
-                              className={`w-11/12 md:w-4/5 mx-auto bg-white ml-2 rounded-lg my-4`}
+                              className={` mx-auto bg-white ml-2 rounded-lg my-4`}
                             >
-                              <h1 className="text-xl font-bold mb-4">
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: item.whatIsTheQuestion,
-                                  }}
-                                ></div>
-                              </h1>
-                              <div className="flex items-center gap-x-4">
+                              <p className="flex item gap-x-4">
+                                <span>{index + 1}</span>
+                                <h1 className="text-xl font-bold mb-4">
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html: item.whatIsTheQuestion,
+                                    }}
+                                  ></div>
+                                </h1>
+                              </p>
+                              <div className="">
                                 <div>
-                                  <div className="flex items-center">
+                                  <div className="">
+                                    <span>(ক) </span>
                                     <input
                                       type="radio"
                                       id={`question-option-${index}-optionA`}
@@ -352,7 +373,8 @@ const ExamPaper = () => {
                                       {item.optionA}
                                     </label>
                                   </div>
-                                  <div className="flex items-center mt-2">
+                                  <div className="">
+                                    <span>(খ) </span>
                                     <input
                                       type="radio"
                                       id={`question-option-${index}-optionB`}
@@ -382,7 +404,8 @@ const ExamPaper = () => {
                                 </div>
 
                                 <div>
-                                  <div className="flex items-center">
+                                  <div className="">
+                                    <span>(গ) </span>
                                     <input
                                       type="radio"
                                       id={`question-option-${index}-optionC`}
@@ -409,7 +432,8 @@ const ExamPaper = () => {
                                       {item.optionC}
                                     </label>
                                   </div>
-                                  <div className="flex items-center mt-2">
+                                  <div className=" ">
+                                    <span>(ঘ) </span>
                                     <input
                                       type="radio"
                                       id={`question-option-${index}-optionD`}
