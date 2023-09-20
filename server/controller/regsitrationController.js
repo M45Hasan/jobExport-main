@@ -28,7 +28,7 @@ const regiController = async (req, res) => {
 
 const verifyEmailController = async (req, res) => {
   const { email, otpmatch } = req.body;
-
+  console.log(email, otpmatch);
   try {
     const search = await User.find({
       email: email,
