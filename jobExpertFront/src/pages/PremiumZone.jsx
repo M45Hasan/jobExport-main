@@ -33,6 +33,7 @@ const PremiumZone = () => {
   console.log(userData.userData.userInfo.email);
   const [show, setShow] = useState(false);
   const addExam = async (item) => {
+    console.log(item)
     try {
       let data = await axios.post("/jobExpert/api/v1/ssl-request", {
         packageUid: item.packageUid,
@@ -89,7 +90,7 @@ const PremiumZone = () => {
 
   const formattedDate = `${year}-${month}-${day}`;
 
-  console.log(formattedDate);
+  console.log(formattedDate)
   let [category, setCategory] = useState();
 
   useEffect(() => {
@@ -136,24 +137,25 @@ const PremiumZone = () => {
           />
         </div>
 
-        {datax.length != 0
-          ? datax.slice(0, numQuestions).map((item, k) =>
-              item.premium == true &&
-              item.examDate > formattedDate &&
-              item.examCategory == category ? (
+        {datax?.length !== 0
+          ? (<> {datax?.map((item, k) => {
+            const isFutureDate = new Date(item.examDate) > new Date(formattedDate);
+            console.log(item.examDate);
+
+            if (item.premium === true && item.examCategory === category && isFutureDate) {
+              return (
                 <div
                   key={k}
                   className="flex md:flex-row flex-col mb-[20px] md:gap-x-[30px] items-center border border-[#000000] p-[5px] md:p-[20px]"
                 >
-                  {console.log("ASDFASDF", item.examDate)}
                   <div className="md:w-[20%] w-[60%]">
                     <img
-                      className="w-full "
+                      className="w-full"
                       src="https://i.ibb.co/vqbtXkJ/image-163.png"
                       alt=""
                     />
                   </div>
-                  <div className=" w-[80%] p-[15px] md:p-[30px]">
+                  <div className="w-[80%] p-[15px] md:p-[30px]">
                     <h2 className="text-[20px] md:text-[40px] font-semibold">
                       {item.packageName}
                     </h2>
@@ -178,7 +180,7 @@ const PremiumZone = () => {
                         onClick={() => addExam(item)}
                         className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg"
                       >
-                        {item.premium == true ? (
+                        {item.premium === true ? (
                           <img
                             src="https://i.ibb.co/H7wjCk9/image-56.png"
                             alt=""
@@ -192,20 +194,24 @@ const PremiumZone = () => {
                     </div>
                   </div>
                 </div>
-              ) : null
-            )
-          : show && (
-              <>
-                <h2 className="text-center text-xl font-bold mb-10">
-                  NO Exams Avilable{" "}
-                </h2>
-                <img
-                  className="block mx-auto text-center"
-                  src={noexam}
-                  alt="No Exams Available"
-                />
-              </>
-            )}
+              );
+            } else {
+              return null;
+            }
+          })}
+          </>
+          ) : show && (
+            <>
+              <h2 className="text-center text-xl font-bold mb-10">
+                NO Exams Available{" "}
+              </h2>
+              <img
+                className="block mx-auto text-center"
+                src={noexam}
+                alt="No Exams Available"
+              />
+            </>
+          )}
       </div>
       {todayExam.length > 0 ? (
         <Button
