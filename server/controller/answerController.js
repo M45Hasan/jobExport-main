@@ -6,7 +6,7 @@ const ExamPackage = require("../model/examPackage");
 const Exam = require("../model/examModel");
 const Question = require("../model/questionModel");
 const Answer = require("../model/ansModel");
-const Paper = require("../model/examPaperModel"); 
+const Paper = require("../model/examPaperModel");
 const { mongo } = require("mongoose");
 
 const createExamPaper = async (req, res) => {
@@ -251,12 +251,14 @@ const resultPulish = async (req, res) => {
 
 const getPaper = async (req, res) => {
   const { puid, id, optn } = req.body;
+  console.log(puid, id, optn);
 
   try {
     const search = await Paper.findOne({
       packageUid: puid,
       examineeId: id,
     });
+    console.log(search);
     if (search) {
       for (const question in optn) {
         const answer = await optn[question];
@@ -321,7 +323,6 @@ const successStd = async (req, res) => {
     res.status(500).json({ error: error.code });
   }
 };
-
 
 // const viewResult =async(req,res)=>{
 //   const {cat ,email}=req.body

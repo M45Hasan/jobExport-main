@@ -20,6 +20,7 @@ const front_url = process.env.ROOTB;
 const tran_id = new ObjectId().toString();
 const sslRequest = async (req, res) => {
   const { nid, name, email, packageUid, packageName, examCategory } = req.body;
+  console.log(packageUid);
   const pack = await ExamPackage.findOne({ packageUid });
 
   const dataa = {
