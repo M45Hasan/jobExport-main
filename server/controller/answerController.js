@@ -70,7 +70,10 @@ const myFab = async (req, res) => {
     if (!search) {
       return res.status(404).json({ error: "Package not found for this user" });
     }
-
+    const ifin = user.myFab.includes(search._id);
+    if(ifin){
+      return res.status(400).json({ error: "You have already " });
+    }
     const updatedUser = await User.findOneAndUpdate(
       { _id: user._id },
       { $push: { myFab: search._id } },
