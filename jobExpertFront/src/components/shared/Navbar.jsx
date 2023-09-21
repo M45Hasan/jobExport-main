@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import logo from "../../assets/brandLogo/navloogo.png";
+import logo from "../../assets/brandLogo/logos.png";
 import CallIcon from "@mui/icons-material/Call";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +20,7 @@ import { activeUser } from "../../userSlice/userSlice";
 import { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import axios from "../Axios/axios";
-import  apy  from "../../components/urlBackend"
+import apy from "../../components/urlBackend";
 
 const settings = ["Profile", "Logout"];
 const Loginpages = ["হোম", "সাকসেস স্টোরি", "এক্সাম", "আমার কোর্স"];
@@ -46,8 +46,6 @@ function Navbar() {
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -77,7 +75,7 @@ function Navbar() {
 
   let handelSow = () => {
     setHidden(!hideen);
-     setNotification(false)
+    setNotification(false);
   };
 
   const [noti, setNoti] = useState([]);
@@ -108,8 +106,6 @@ function Navbar() {
     fetchNotifications();
   }, []);
 
-
-
   return (
     <AppBar position="static" sx={{ backgroundColor: "#EAE9E9" }}>
       <Container maxWidth="xl">
@@ -129,7 +125,7 @@ function Navbar() {
                 textDecoration: "none",
               }}
             >
-              <img src={logo} alt="" />
+              <img className="w-[120px] h-[120px]" src={logo} alt="" />
             </Typography>
           </Link>
           <Box
@@ -168,15 +164,15 @@ function Navbar() {
             >
               {show
                 ? Loginpages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))
+                    <MenuItem key={page} onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">{page}</Typography>
+                    </MenuItem>
+                  ))
                 : pages.map((pagees) => (
-                  <MenuItem key={pagees} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{pagees}</Typography>
-                  </MenuItem>
-                ))}
+                    <MenuItem key={pagees} onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">{pagees}</Typography>
+                    </MenuItem>
+                  ))}
 
               {show ? (
                 <>
@@ -303,26 +299,37 @@ function Navbar() {
                           <span className="relative inline-flex rounded-full h-4 w-4 bg-[#EE8419]"></span>
                         </div>
                         {hideen && (
-                          <div onClick={() => setNotification(false)} className=" absolute rounded-md border  top-[380%] z-50 left-[-158px] w-[200px] text-white bg-slate-400 p-2 ">
+                          <div
+                            onClick={() => setNotification(false)}
+                            className=" absolute rounded-md border  top-[380%] z-50 left-[-158px] w-[200px] text-white bg-slate-400 p-2 "
+                          >
                             <div className="flex items-center text-center text-xs justify-center gap-x-4">
                               <ul>
-                                {noti.reverse().slice(0, 3).map((item, i) => (
-                                  <div key={i} className="p-2 rounded-md border border-[#ee1919] font-semibold text-[#000000] mt-1">
-                                    <p className="text-center font-bold text-[14px] text-[#000000]">New Exam </p>
-                                    <p className="text-center">
-                                      Teacher: {item.teacher}
-                                    </p>
-                                    <p className="text-center">
-                                      category: {item.category}
-                                    </p>
-                                    <p className="text-center">
-                                      Subject: {item.packageName}
-                                    </p>
-                                    <p className="text-center">
-                                      Price: {item.price} Taka
-                                    </p>
-                                  </div>
-                                ))}
+                                {noti
+                                  .reverse()
+                                  .slice(0, 3)
+                                  .map((item, i) => (
+                                    <div
+                                      key={i}
+                                      className="p-2 rounded-md border border-[#ee1919] font-semibold text-[#000000] mt-1"
+                                    >
+                                      <p className="text-center font-bold text-[14px] text-[#000000]">
+                                        New Exam{" "}
+                                      </p>
+                                      <p className="text-center">
+                                        Teacher: {item.teacher}
+                                      </p>
+                                      <p className="text-center">
+                                        category: {item.category}
+                                      </p>
+                                      <p className="text-center">
+                                        Subject: {item.packageName}
+                                      </p>
+                                      <p className="text-center">
+                                        Price: {item.price} Taka
+                                      </p>
+                                    </div>
+                                  ))}
                               </ul>
                             </div>
                           </div>
