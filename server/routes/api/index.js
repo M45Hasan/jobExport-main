@@ -1,6 +1,7 @@
 const express = require("express");
 const _ = express.Router();
 const path = require("path");
+const Job = require("../../model/jobModal")
 const app = express();
 
 const {
@@ -29,7 +30,7 @@ const {
   categoryWiseTodayExam,
   selectExamByUser,
   waitingResult,
-  publishBoolean
+  publishBoolean,
 } = require("../../controller/examPackageController");
 
 // const { examCreate, deleteExam } = require("../../controller/examController");
@@ -56,6 +57,43 @@ const { deletePdf, getPdfs } = require("../../controller/pdfDelete");
 _.post("/upload-pdf", getPdf);
 _.get("/upload-pdf", getPdfs);
 _.delete("/upload-pdf/:filename", deletePdf);
+
+
+// job circular ********************************************** start*********
+const postJob = require("../../controller/jobController");
+const getJob = require("../../controller/jobController");
+_.post("/submitJobCircular", postJob);
+_.get("/submitJobCircular", async (req, res) => {
+  try {
+    const jobCirculars = await Job.find();
+
+    res.status(200).json(jobCirculars);
+  } catch (error) {
+    console.error("Error fetching job circulars:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching job circulars" });
+  }
+});
+_.delete('/submitJobCircular/:id', async (req, res) => {
+  const jobId = req.params.id;
+  console.log(jobId)
+
+  try {
+    
+    const deletedJobCircular = await Job.findByIdAndDelete({_id:jobId});
+
+    if (!deletedJobCircular) {
+      return res.status(404).json({ error: 'Job circular not found' });
+    }
+
+    res.status(200).json({ message: 'Job circular deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting job circular:', error);
+    res.status(500).json({ error: 'An error occurred while deleting the job circular' });
+  }
+});
+// job circular ********************************************** end *********
 
 const {
   createVideo,

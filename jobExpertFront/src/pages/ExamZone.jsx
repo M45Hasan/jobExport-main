@@ -51,7 +51,7 @@ const ExamZone = () => {
         theme: "light",
       });
     } catch (e) {
-      toast("You have already", {
+      toast(`You have already or  ${e.code}`, {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -189,6 +189,16 @@ const ExamZone = () => {
                           Participate Exam
                         </button>
                       </div>
+
+
+                      <button
+                        onClick={() => addExam(item.packageUid)}
+                        className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg"
+                      >
+
+                        Participate Exam
+                      </button>
+
                     </div>
                   </div>
                 );

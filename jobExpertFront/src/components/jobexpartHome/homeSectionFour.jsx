@@ -57,7 +57,7 @@ const homeSectionFour = () => {
 
   // total day of company
 
-  const firstDate = new Date("2015-01-01"); // Set your desired first date here
+  const firstDate = new Date("2023-01-01"); // Set your desired first date here
   const [yearCount, setYearCount] = useState(null);
 
   useEffect(() => {

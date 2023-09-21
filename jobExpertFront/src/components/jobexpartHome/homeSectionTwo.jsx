@@ -73,15 +73,15 @@ const homeSectionTwo = () => {
           </h3>
           <p className="text-center px-2"></p>
         </Link>
-        <a
-          href="https://www.bdjobs.com/"
-          target="_blank"
+        <Link 
+          to="circular"
+        
           className="bg-[#EAE9E9] w-11/12 py-10 rounded-lg hover:bg-[#26A4DE] duration-500 hover:text-[#FFFFFF]"
         >
           <img src={job} alt="" className="w-20 mx-auto" />
           <h3 className="text-center text-lg font-bold py-2">Circular Zone</h3>
           <p className="text-center px-2"></p>
-        </a>
+        </Link>
       </section>
     </>
   );
