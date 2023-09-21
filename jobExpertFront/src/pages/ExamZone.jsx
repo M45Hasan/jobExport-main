@@ -51,7 +51,7 @@ const ExamZone = () => {
         theme: "light",
       });
     } catch (e) {
-      toast("You have already", {
+      toast(`You have already or  ${e.code}`, {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -170,15 +170,7 @@ const ExamZone = () => {
                         onClick={() => addExam(item.packageUid)}
                         className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg"
                       >
-                        {item.premium === true ? (
-                          <img
-                            src="https://i.ibb.co/H7wjCk9/image-56.png"
-                            alt=""
-                            className="w-5"
-                          />
-                        ) : (
-                          ""
-                        )}
+
                         Participate Exam
                       </button>
                     </div>

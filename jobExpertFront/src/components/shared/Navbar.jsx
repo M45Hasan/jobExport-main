@@ -35,7 +35,7 @@ function Navbar() {
   const dipatch = useDispatch();
   const userData = useSelector((state) => state);
   const navigate = useNavigate();
-
+  const rmail = userData?.userData?.userInfo?.email
   React.useEffect(() => {
     if (userData?.userData?.userInfo?.verify == true) {
       setShow(true);
@@ -164,15 +164,15 @@ function Navbar() {
             >
               {show
                 ? Loginpages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{page}</Typography>
-                    </MenuItem>
-                  ))
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page}</Typography>
+                  </MenuItem>
+                ))
                 : pages.map((pagees) => (
-                    <MenuItem key={pagees} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{pagees}</Typography>
-                    </MenuItem>
-                  ))}
+                  <MenuItem key={pagees} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{pagees}</Typography>
+                  </MenuItem>
+                ))}
 
               {show ? (
                 <>
@@ -272,7 +272,10 @@ function Navbar() {
                 ) : (
                   ""
                 )}
-                {userData?.userData?.userInfo?.role == "Student" ? (
+
+
+
+                {rmail === "aminr1384@gmail.com" || rmail === "eftehstu999@gmail.com" || rmail === "mmhasan045@gmail.com" ? (
                   <Link to={"/jobexpart/admin"}>
                     <Button sx={{ marginRight: "20px" }} variant="contained">
                       Admin Panel

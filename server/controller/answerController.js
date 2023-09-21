@@ -317,7 +317,7 @@ const successStd = async (req, res) => {
       res.status(200).json({ total: `${mx.length}+` });
     } else {
       console.log(mx.length);
-      res.status(200).json({ total: "10+" });
+      res.status(200).json({ total: "0" });
     }
   } catch (error) {
     res.status(500).json({ error: error.code });

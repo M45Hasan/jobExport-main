@@ -154,7 +154,7 @@ const packageBuyer = async (req, res) => {
     console.log(searchUse);
     console.log(free?._id);
     if (!searchUse) {
-      return res.status(400).json({ error: "You have already" });
+      return res.status(400).json({ error: "You have already or Teacher" });
     }
     if (search && searchUser) {
       await ExamPackage.findOneAndUpdate(
