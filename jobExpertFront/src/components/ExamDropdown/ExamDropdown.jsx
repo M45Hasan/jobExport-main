@@ -3,7 +3,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "../Axios/axios";
-
+import { MdKeyboardArrowDown } from "react-icons/md";
 const ExamDropdown = ({ dataFromeChild, models, titel }) => {
   const [selectedOption, setSelectedOption] = useState("ফ্রী মডেল টেস্ট");
 
@@ -71,7 +71,7 @@ const ExamDropdown = ({ dataFromeChild, models, titel }) => {
           id="options"
           value={selectedOption}
           onChange={handleChange}
-          className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 pr-8 shadow leading-tight focus:outline-none focus:shadow-outline bg-primary text-[#FFFFFF] cursor-pointer"
+          className="block relative appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 pr-8 shadow leading-tight focus:outline-none focus:shadow-outline bg-primary text-[#FFFFFF] cursor-pointer"
         >
           <option value="ফ্রী মডেল টেস্ট" name="Bangla" selected>
             ফ্রী মডেল টেস্ট
@@ -91,12 +91,15 @@ const ExamDropdown = ({ dataFromeChild, models, titel }) => {
           <option value="ব্যাংক প্রস্তুতি" name="ব্যাংক">
             ব্যাংক প্রস্তুতি
           </option>
+          <option value="অন্যান্য" name="অন্যান্য">
+            অন্যান্য
+          </option>
         </select>
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
           <Icon
             icon="iconamoon:arrow-down-2-duotone"
             width={25}
-            className="text-[#FFFFFF]"
+            className="text-[#131212]"
           />
         </div>
       </div>

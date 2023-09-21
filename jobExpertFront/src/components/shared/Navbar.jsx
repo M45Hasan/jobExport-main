@@ -162,17 +162,7 @@ function Navbar() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {show
-                ? Loginpages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{page}</Typography>
-                    </MenuItem>
-                  ))
-                : pages.map((pagees) => (
-                    <MenuItem key={pagees} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center">{pagees}</Typography>
-                    </MenuItem>
-                  ))}
+              {show ? "" : ""}
 
               {show ? (
                 <>
@@ -186,15 +176,25 @@ function Navbar() {
                     <h1 className="text-black my-2 mx-2">এক্সাম</h1>
                   </Link>
                   <Link to={"premiumZone"}>
-                    <h1 className="text-black my-2">আমার কোর্স</h1>
+                    <h1 className="text-black mx-2 my-2">আমার কোর্স</h1>
                   </Link>
                 </>
               ) : (
-                pages.map((pagees) => (
-                  <MenuItem key={pagees} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{pagees}</Typography>
-                  </MenuItem>
-                ))
+                <>
+                  <Link to={"/login"}>
+                    <h1 className="text-black my-2 mx-2">চাকরি প্রস্তুতি</h1>
+                  </Link>
+                  <Link to={"/login"}>
+                    <h1 className="text-black my-2 mx-2">ভর্তি পরিক্ষা</h1>{" "}
+                  </Link>
+                  <Link to={"/login"}>
+                    <h1 className="text-black my-2 mx-2">আমাদের সম্পর্কে</h1>
+                  </Link>
+
+                  <Link to={"tel:+880 1521575970"}>
+                    <h1 className="text-black my-2  mx-2">যোগাযোগ</h1>
+                  </Link>
+                </>
               )}
             </Menu>
           </Box>
@@ -214,7 +214,7 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            <img src={logo} alt="" />
+            <img className="w-[120px] h-[120px]" src={logo} alt="" />
           </Typography>
           <Box
             sx={{
@@ -240,15 +240,19 @@ function Navbar() {
               </>
             ) : (
               <>
-                {pages.map((page) => (
-                  <Button
-                    key={page}
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "black", display: "block" }}
-                  >
-                    {page}
-                  </Button>
-                ))}
+                <Link to={"/login"}>
+                  <h1 className="text-black my-2 mx-2">চাকরি প্রস্তুতি</h1>
+                </Link>
+                <Link to={"/login"}>
+                  <h1 className="text-black my-2 mx-2">ভর্তি পরিক্ষা</h1>{" "}
+                </Link>
+                <Link to={"/login"}>
+                  <h1 className="text-black my-2 mx-2">আমাদের সম্পর্কে</h1>
+                </Link>
+
+                <Link to={"tel:+880 1521575970"}>
+                  <h1 className="text-black my-2">যোগাযোগ</h1>
+                </Link>
               </>
             )}
           </Box>
@@ -381,7 +385,7 @@ function Navbar() {
               <>
                 <h1 className="text-black hidden md:block">
                   <CallIcon />
-                  +880 1700-000000
+                  +880 1521575970
                 </h1>
                 <Link to="/login">
                   <Button variant="contained">লগ-ইন করুন</Button>

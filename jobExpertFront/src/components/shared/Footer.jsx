@@ -1,7 +1,8 @@
 import { Icon } from "@iconify/react";
-import logo from "../../assets/brandLogo/logo.png";
 import appstore from "../../assets/brandLogo/appstore (1).png";
 import googlestore from "../../assets/brandLogo/appstore (2).png";
+import logo from "../../assets/brandLogo/logos.png";
+import logof from "../../assets/brandLogo/weepoka.png";
 
 const Footer = () => {
   const getCurrentYear = () => {
@@ -43,7 +44,7 @@ const Footer = () => {
                   className="text-[#FFFFFF] transform hover:-translate-y-2 duration-300"
                 />
               </a>
-              <a href="/">
+              <a href="https://www.facebook.com/profile.php?id=61551578308108&mibextid=D4KYlr">
                 <Icon
                   icon="ic:baseline-facebook"
                   width={28}
@@ -153,8 +154,12 @@ const Footer = () => {
       <div className="">
         <p className="text-base py-4 text-center text-gray-600">
           Copyright ©{getCurrentYear()} Job Expert Developed by{" "}
-          <a href="https://weerodigital.com/" target="_blank">
-            <span className="text-[#004A8F] font-bold">Weero Digital</span>
+          <a href="https://weepoka.com/" target="_blank">
+            <img
+              className="md:w-[10%] w-[40%] inline-block"
+              src={logof}
+              alt=""
+            />
           </a>
           . All rights reserved.
         </p>

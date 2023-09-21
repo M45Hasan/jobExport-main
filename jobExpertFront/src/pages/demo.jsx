@@ -59,7 +59,7 @@ const ExamPaper = () => {
   ]);
 
   const selectedRadioStyle = {
-    backgroundColor: "green", // Replace with the color you want for selected radio inputs
+    backgroundColor: "red",
   };
   const [optn, setOptn] = useState({});
 
@@ -77,13 +77,20 @@ const ExamPaper = () => {
 
   let [show, setShow] = useState(false);
   const handeleStore = async (puid) => {
-    let ans = await axios
+    await axios
       .post("/jobExpert/api/v1/examinee-paper-push", {
         ...{ puid: puid, id: seletor.userData.userInfo.id },
         optn,
       })
-      .then(() => {
-        setShow(!show);
+      .then(async () => {
+        await axios
+          .post("/jobExpert/api/v1/myfab", {
+            packageUid: puid,
+            std: seletor.userData.userInfo.id,
+          })
+          .then(() => {
+            setShow(!show);
+          });
       });
   };
 
@@ -106,7 +113,10 @@ const ExamPaper = () => {
         setTimeRemaining((prevTime) => {
           if (prevTime <= 0) {
             clearInterval(timer);
-            handeleStore(data.packageUid, optn);
+            const selectedAnswers = { ...optn }; // Capture selected answers
+            console.log(selectedAnswers);
+            handeleStore(data.packageUid, selectedAnswers);
+            setIsExamSubmitted(true); // Update
             return 0;
           }
           return prevTime - 1;

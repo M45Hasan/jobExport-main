@@ -56,7 +56,7 @@ const myFab = async (req, res) => {
   const { packageUid, std } = req.body;
   console.log(packageUid);
   try {
-    const user = await User.findById(std);
+    const user = await User.findById({ _id: std });
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
