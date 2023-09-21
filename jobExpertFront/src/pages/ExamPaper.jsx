@@ -8,17 +8,17 @@ import veifysucces from "../assets/verificationIcon/verifysuccess.png";
 
 const ExamPaper = () => {
   const { id } = useParams();
-  const seletor = useSelector((state) => state);
+  const selector = useSelector((state) => state);
   const [data, setData] = useState({});
-
   const [selectedOptions, setSelectedOptions] = useState({});
+  const [isExamSubmitted, setIsExamSubmitted] = useState(false);
 
   useEffect(() => {
     async function fetchQuestions() {
       try {
         let response = await axios.post("/jobExpert/api/v1/whocanexam", {
           id: id,
-          myId: seletor.userData.userInfo.id,
+          myId: selector.userData.userInfo.id,
         });
         setData(response.data);
         const initialSelectedOptions = {};
@@ -31,14 +31,14 @@ const ExamPaper = () => {
       }
     }
     fetchQuestions();
-  }, [id, seletor.userData.userInfo.id]);
+  }, [id, selector.userData.userInfo.id]);
 
   const [paper, setPaper] = useState({});
   useEffect(() => {
     async function fetchData() {
       try {
         const pushData = await axios.post("/jobExpert/api/v1/exampaper", {
-          std: seletor.userData.userInfo.id,
+          std: selector.userData.userInfo.id,
           packageUid: data.packageUid,
           packageName: data.packageName,
           examCategory: data.examCategory,
@@ -52,14 +52,14 @@ const ExamPaper = () => {
 
     fetchData();
   }, [
-    seletor.userData.userInfo.id,
+    selector.userData.userInfo.id,
     data.packageUid,
     data.packageName,
     data.examCategory,
   ]);
 
   const selectedRadioStyle = {
-    backgroundColor: "green", // Replace with the color you want for selected radio inputs
+    backgroundColor: "red",
   };
   const [optn, setOptn] = useState({});
 
@@ -76,26 +76,31 @@ const ExamPaper = () => {
   };
 
   let [show, setShow] = useState(false);
-  const handeleStore = async (puid) => {
-    let ans = await axios
+  const handeleStore = async (puid, selectedAnswers) => {
+    await axios
       .post("/jobExpert/api/v1/examinee-paper-push", {
-        ...{ puid: puid, id: seletor.userData.userInfo.id },
-        optn,
+        puid: puid,
+        id: selector.userData.userInfo.id,
+        optn: selectedAnswers,
       })
-      .then(() => {
-        setShow(!show);
+      .then(async () => {
+        await axios
+          .post("/jobExpert/api/v1/myfab", {
+            packageUid: puid,
+            std: selector.userData.userInfo.id,
+          })
+          .then(() => {
+            setShow(!show);
+          });
       });
   };
-  const optnRef = useRef(optn);
-  console.log(optnRef);
+
   // ======================
 
   const examDuration = parseInt(data?.examDuration);
 
   const initialTimeRemaining = examDuration * 60;
   const [timeRemaining, setTimeRemaining] = useState(0);
-
-  const [isExamSubmitted, setIsExamSubmitted] = useState(false);
 
   useEffect(() => {
     setTimeRemaining(initialTimeRemaining);
@@ -107,18 +112,21 @@ const ExamPaper = () => {
         setTimeRemaining((prevTime) => {
           if (prevTime <= 0) {
             clearInterval(timer);
-            handeleStore(data.packageUid, optnRef.current);
+            // Use the selectedOptions directly here
+            const selectedAnswers = { ...selectedOptions };
+            handeleStore(data.packageUid, selectedAnswers);
+            setIsExamSubmitted(true); // Update
             return 0;
           }
           return prevTime - 1;
         });
-      }, 500);
+      }, 1000);
     }
 
     return () => {
       clearInterval(timer);
     };
-  }, [initialTimeRemaining, isExamSubmitted]);
+  }, [initialTimeRemaining, isExamSubmitted, data.packageUid, selectedOptions]);
 
   return (
     <div>

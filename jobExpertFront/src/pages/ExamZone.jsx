@@ -117,7 +117,7 @@ const ExamZone = () => {
       <div className="w-11/12 md:w-4/5 mx-auto pb-16">
         <div className="pl-4 md:pl-12 mt-16 mb-[64px]">
           <ExamDropdown
-            titel={"পরিক্ষাঃ"}
+            titel={"পরীক্ষা:"}
             dataFromeChild={reciveDataFromChild}
             models={(selectedOption) => {
               // Do something with the selectedOption
@@ -127,44 +127,69 @@ const ExamZone = () => {
           />
         </div>
 
-        {datax?.length !== 0
-          ? (<> {datax?.map((item, k) => {
-            const isFutureDate = new Date(item.examDate) > new Date(formattedDate);
-            console.log(item.examDate);
+        {datax?.length !== 0 ? (
+          <>
+            {" "}
+            {datax?.map((item, k) => {
+              const isFutureDate =
+                new Date(item.examDate) > new Date(formattedDate);
+              console.log(item.examDate);
 
-            if (item.premium === false && item.examCategory === category && isFutureDate) {
-              return (
-                <div
-                  key={k}
-                  className="flex md:flex-row flex-col mb-[20px] md:gap-x-[30px] items-center border border-[#000000] p-[5px] md:p-[20px]"
-                >
-                  <div className="md:w-[20%] w-[60%]">
-                    <img
-                      className="w-full"
-                      src="https://i.ibb.co/vqbtXkJ/image-163.png"
-                      alt=""
-                    />
-                  </div>
-                  <div className="w-[80%] p-[15px] md:p-[30px]">
-                    <h2 className="text-[20px] md:text-[40px] font-semibold">
-                      {item.packageName}
-                    </h2>
-                    <p className="md:text-[24px] text-[14px] my-[10px]">
-                      {item.packageDetail}
-                    </p>
-                    <div className="flex md:flex-row flex-col gap-x-0 md:gap-x-10  justify-evenly md:justify-start items-start md:items-center">
-                      <div>
-                        <p className="md:text-[24px] text-[14px] ">
-                          পরীক্ষা শুরুঃ {item.examDate}
-                        </p>
-                        <p className="md:text-[24px] text-[14px] ">
-                          {" "}
-                          পরীক্ষার সময়ঃ {item.examTime}
-                        </p>
-                        <p className="md:text-[24px] text-[14px] ">
-                          Total Examinee : {item.packageBuyer.length}
-                        </p>
+              if (
+                item.premium === false &&
+                item.examCategory === category &&
+                isFutureDate
+              ) {
+                return (
+                  <div
+                    key={k}
+                    className="flex md:flex-row flex-col mb-[20px] md:gap-x-[30px] items-center border border-[#000000] p-[5px] md:p-[20px]"
+                  >
+                    <div className="md:w-[20%] w-[60%]">
+                      <img
+                        className="w-full"
+                        src="https://i.ibb.co/vqbtXkJ/image-163.png"
+                        alt=""
+                      />
+                    </div>
+                    <div className="w-[80%] p-[15px] md:p-[30px]">
+                      <h2 className="text-[20px] md:text-[40px] font-semibold">
+                        {item.packageName}
+                      </h2>
+                      <p className="md:text-[24px] text-[14px] my-[10px]">
+                        {item.packageDetail}
+                      </p>
+                      <div className="flex md:flex-row flex-col gap-x-0 md:gap-x-10  justify-evenly md:justify-start items-start md:items-center">
+                        <div>
+                          <p className="md:text-[24px] text-[14px] ">
+                            পরীক্ষা শুরুঃ {item.examDate}
+                          </p>
+                          <p className="md:text-[24px] text-[14px] ">
+                            {" "}
+                            পরীক্ষার সময়ঃ {item.examTime}
+                          </p>
+                          <p className="md:text-[24px] text-[14px] ">
+                            Total Examinee : {item.packageBuyer.length}
+                          </p>
+                        </div>
+
+                        <button
+                          onClick={() => addExam(item.packageUid)}
+                          className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg"
+                        >
+                          {item.premium === true ? (
+                            <img
+                              src="https://i.ibb.co/H7wjCk9/image-56.png"
+                              alt=""
+                              className="w-5"
+                            />
+                          ) : (
+                            ""
+                          )}
+                          Participate Exam
+                        </button>
                       </div>
+
 
                       <button
                         onClick={() => addExam(item.packageUid)}
@@ -173,16 +198,17 @@ const ExamZone = () => {
 
                         Participate Exam
                       </button>
+
                     </div>
                   </div>
-                </div>
-              );
-            } else {
-              return null;
-            }
-          })}
+                );
+              } else {
+                return null;
+              }
+            })}
           </>
-          ) : show && (
+        ) : (
+          show && (
             <>
               <h2 className="text-center text-xl font-bold mb-10">
                 NO Exams Available{" "}
@@ -193,8 +219,8 @@ const ExamZone = () => {
                 alt="No Exams Available"
               />
             </>
-          )}
-
+          )
+        )}
       </div>
       {todayExam.length < 5 ? (
         <Button

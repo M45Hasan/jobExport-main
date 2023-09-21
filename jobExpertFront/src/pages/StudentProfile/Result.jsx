@@ -8,25 +8,26 @@ import { useSelector } from "react-redux";
 const Result = () => {
   const userDa = useSelector((state) => state);
 
-  const [useInfo, setUseInfo] = useState()
-  const email = userDa?.userData?.userInfo?.email
-  const [cat, getcat] = useState("")
+  const [useInfo, setUseInfo] = useState();
+  const email = userDa?.userData?.userInfo?.email;
+  const [cat, getcat] = useState("");
   useEffect(() => {
     const how = async () => {
-      let data = await axios.post("/jobExpert/api/v1/my-result", { email, cat });
-      console.log(data)
+      let data = await axios.post("/jobExpert/api/v1/my-result", {
+        email,
+        cat,
+      });
+      console.log(data);
       try {
         if (data.data) {
-          setUseInfo(data.data)
+          setUseInfo(data.data);
         }
       } catch (error) {
-        console.log(error.code)
+        console.log(error.code);
       }
-    }
-    how()
-
-  }, [cat, email])
-
+    };
+    how();
+  }, [cat, email]);
 
   // const [useInf, setUseInf] = useState()
   // useEffect(() => {
@@ -45,20 +46,11 @@ const Result = () => {
 
   // }, [cat, email])
 
-
-
-
-
-
-
-
-
   return (
     <>
       <div className=" flex items-center mt-16">
-
         <ExamDropdown
-          titel={"পরিক্ষাঃ"}
+          titel={"পরীক্ষা:"}
           // dataFromeChild={reciveDataFromChild}
           models={(selectedOption) => {
             // Do something with the selectedOption
@@ -66,18 +58,17 @@ const Result = () => {
             getcat(selectedOption);
           }}
         />
-
       </div>
       <div className="mt-16">
-
         {useInfo?.map((info, i) => (
           <>
-
             <div key={i} className="border  bg-primary">
               {info.result?.map((cat, ci) => (
-                <h1 key={ci} className="text-xl font-semibold text-[#FFFFFF] py-3 text-center">
+                <h1
+                  key={ci}
+                  className="text-xl font-semibold text-[#FFFFFF] py-3 text-center"
+                >
                   {cat.examCategory}
-
                 </h1>
               ))}
             </div>

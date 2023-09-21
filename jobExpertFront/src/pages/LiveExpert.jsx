@@ -1,3 +1,4 @@
+
 import Banner from "../components/Banner/Banner";
 import ExamDropdown from "../components/ExamDropdown/ExamDropdown";
 import { useState, useEffect } from "react";
@@ -27,7 +28,7 @@ const LiveExpert = () => {
 
   const [numQuestions, setNumQuestions] = useState(10); // Number of questions to display
   const handleMoreQuestions = () => {
-    setNumQuestions(numQuestions + 1); // Increase the number of questions by 10
+    setNumQuestions(numQuestions + 10); // Increase the number of questions by 10
   };
 
   const [show, setShow] = useState(false);
