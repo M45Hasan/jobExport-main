@@ -7,7 +7,7 @@ import apy from "../components/urlBackend"
 const Admin = () => {
   const [productsData, setProductsData] = useState("");
 
-  const [histo, setHisto] = useState("");
+  const [histo, setHisto] = useState([]);
   const [can, setCan] = useState("");
   const [push, setPush] = useState("");
   const [userShow, setUserShow] = useState(false)
@@ -39,16 +39,29 @@ const Admin = () => {
   }, [push]);
 
 
+  // useEffect(() => {
+  //   const getApplication = async () => {
+  //     const how = await axios.get(`${apy}/jobExpert/api/v1/wait-for-result`);
+  //     if (how.data.length > 0) {
+  //       setCan(how.data);
+  //     }
+  //   };
+  //   getApplication();
+  // }, []);
+
   useEffect(() => {
-    const getApplication = async () => {
-      const how = await axios.get(`${apy}/jobExpert/api/v1/wait-for-result`);
-      if (how.data.length > 0) {
-        setCan(how.data);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${apy}/jobExpert/api/v1/wait-for-result`);
+        if (response.data.length > 0) {
+          setCan(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     };
-    getApplication();
-  }, []);
-
+    fetchData();
+  }, [histo]);
 
   const [newArr, setArr] = useState([])
 
@@ -220,6 +233,8 @@ const Admin = () => {
 
     }
   }
+  // date 
+
   return (
     <div className="bg-[#767889] w-full flex   h-screen">
       <div className="w-64 bg-gray-800 h-screen text-white p-4">
@@ -493,21 +508,24 @@ const Admin = () => {
 
 
 
+          <div>
+            <h2 onClick={() => (setUserSh(!userSh), setUserS(false), setUserSho(false), setUserShow(false))} className="text-2xl font-bold mb-4">Result Publish</h2>
 
-          <h2 onClick={() => (setUserSh(!userSh), setUserS(false), setUserSho(false), setUserShow(false))} className="text-2xl font-bold mb-4">Result Publish</h2>
+            {userSh && (
+              <div key={""} className="h-[400px] w-[250px] overflow-auto rounded-md shadow-md ml-2 relative">
+                {histo
+                  .filter(
+                    (product) =>
 
-          {userSh && (
-            <div key={""} className="h-[400px] w-[250px] overflow-auto rounded-md shadow-md ml-2 relative">
-              {histo &&
-                histo
-
-                  .filter((product, index) => can[index] && can[index].packageUid === product.packageUid && product.packageBuyer.length !== 0 && product.publish == false)
+                      product.packageBuyer.length !== 0 &&
+                      product.publish === false && new Date(product.examDate) < new Date(formattedDate)
+                  )
                   .map((product) => (
                     <>
                       <div
                         key={product.id}
-                        className="bg-[#085140] text-white cursor-pointer border-cyan-400 border-[1px] flex"
-                        onClick={() => handleProductCli(product)}
+                        className="bg-[#085140] text-white  border-cyan-400 border-[1px] flex"
+
                       >
                         <div className="bg-[#1F2937] border-gray-400 border-r-[1px] w-full">
                           <p className="text-[12px] font-medium mb-2">
@@ -522,20 +540,20 @@ const Admin = () => {
                           <p className="text-[12px] font-medium mb-1">
                             {product.premium}
                           </p>
-                          <p className="text-[12px] text-end font-medium mb-1">
+                          <p onClick={() => handleProductCli(product)} className="text-[12px] text-end cursor-pointer font-medium mb-1">
                             Click to publish
                           </p>
                         </div>
                       </div>
-                      <p onClick={() => handleSend(product._id)} className="text-[12px] cursor-pointer  text-end text-cyan-400 font-bold mb-1">
+                      <p onClick={() => handleSend(product._id)} className="text-[12px] inline-block cursor-pointer  text-cyan-400 font-bold mb-1">
                         Delete
                       </p>
                     </>
                   ))}
-            </div>
-          )}
+              </div>
+            )}
 
-
+          </div>
 
         </div>
 

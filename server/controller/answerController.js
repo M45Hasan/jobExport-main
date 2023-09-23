@@ -71,7 +71,7 @@ const myFab = async (req, res) => {
       return res.status(404).json({ error: "Package not found for this user" });
     }
     const ifin = user.myFab.includes(search._id);
-    if(ifin){
+    if (ifin) {
       return res.status(400).json({ error: "You have already " });
     }
     const updatedUser = await User.findOneAndUpdate(
@@ -176,17 +176,17 @@ const resultPulish = async (req, res) => {
     });
     console.log("ans", answers);
     const user = await User.findOne({ _id: examineeId });
-    console.log("user", user);
+    console.log("userResult:", user);
 
     if (!answers || !user) {
       return res.status(404).json({ message: "Answers or user not found" });
     }
 
-    let rightMarks = 0;
-    let rightCount = 0;
-    let wrongMarks = 0;
-    let wrongCount = 0;
-    let comment = "";
+    var rightMarks = 0;
+    var rightCount = 0;
+    var wrongMarks = 0;
+    var wrongCount = 0;
+    var comment = "";
 
     for (const answer of answers) {
       const question = await Question.findOne({
@@ -207,17 +207,24 @@ const resultPulish = async (req, res) => {
 
     const getMark = rightMarks - wrongMarks;
     const percentage = (rightCount / (rightCount + wrongCount)) * 100;
+    console.log("percentage:", percentage);
+    console.log("getMark:", getMark);
 
-    if (getMark >= 85) {
+    if (percentage >= 85) {
       comment = "Excellent";
-    } else if (getMark >= 70 && getMark <= 84) {
+      console.log(comment);
+    } else if (percentage >= 70 && percentage <= 84) {
       comment = "Good Shape";
+      console.log(comment);
     } else if (getMark >= 60 && getMark <= 69) {
       comment = "Need More Efforts";
-    } else if (getMark >= 40 && getMark <= 59) {
+      console.log(comment);
+    } else if (percentage >= 40 && percentage <= 59) {
       comment = "Try again & Practice more";
+      console.log(comment);
     } else {
       comment = "Keep pushing & Try ...";
+      console.log(comment);
     }
 
     const updatedPaper = await Paper.findOneAndUpdate(
@@ -237,7 +244,7 @@ const resultPulish = async (req, res) => {
       { new: true }
     );
 
-    console.log("Hello", updatedPaper);
+    console.log("ami result", updatedPaper);
 
     res.status(200).json(updatedPaper);
   } catch (error) {

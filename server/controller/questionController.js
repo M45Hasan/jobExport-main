@@ -5,6 +5,61 @@ const ExamPackage = require("../model/examPackage");
 const Question = require("../model/questionModel");
 const User = require("../model/userModel");
 
+// const createQuestion = async (req, res) => {
+//   const {
+//     whatIsTheQuestion,
+//     optionA,
+//     optionB,
+//     optionC,
+//     optionD,
+//     rightAnsOne,
+//     rightAnsTwo,
+//     ansDetail,
+//     rightMark,
+//     wrongMark,
+//     examSerial,
+//     nid,
+
+//   } = req.body;
+
+//   try {
+//     const saerch = await ExamPackage.find({ examSerial, nid });
+
+//     if (saerch.length != 0) {
+//       const newQuestion = new Question({
+//         examTrack: saerch[0].packageUid,
+//         whatIsTheQuestion,
+//         optionA,
+//         optionB,
+//         optionC,
+//         optionD,
+//         rightAnsOne,
+//         rightAnsTwo,
+//         ansDetail,
+//         rightMark,
+//         wrongMark,
+//         serial,
+//       });
+//       newQuestion.save();
+//       await ExamPackage.findByIdAndUpdate(
+//         { _id: saerch[0]._id },
+//         { $push: { qestionList: newQuestion._id } },
+//         { new: true }
+//       );
+//       const crtQ = await Question.findOneAndUpdate(
+//         { _id: newQuestion._id },
+//         { $push: { examId: saerch[0]._id } }
+//       );
+//       res.status(201).json(crtQ);
+//     } else {
+//       res.status(401).json({ error: "Already ExamSerial Name exist" });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "An error occurred" });
+//   }
+// };
+
 const createQuestion = async (req, res) => {
   const {
     whatIsTheQuestion,
@@ -19,15 +74,21 @@ const createQuestion = async (req, res) => {
     wrongMark,
     examSerial,
     nid,
-    serial,
   } = req.body;
 
   try {
-    const saerch = await ExamPackage.find({ examSerial, nid });
+    const search = await ExamPackage.find({ examSerial, nid });
 
-    if (saerch.length != 0) {
+    if (search.length !== 0) {
+      let serial = 0;
+      if (search[0].qestionList.length > 0) {
+        serial = search[0].qestionList.length;
+      }
+
+      serial++;
+
       const newQuestion = new Question({
-        examTrack: saerch[0].packageUid,
+        examTrack: search[0].packageUid,
         whatIsTheQuestion,
         optionA,
         optionB,
@@ -40,19 +101,23 @@ const createQuestion = async (req, res) => {
         wrongMark,
         serial,
       });
+
       newQuestion.save();
+
       await ExamPackage.findByIdAndUpdate(
-        { _id: saerch[0]._id },
+        { _id: search[0]._id },
         { $push: { qestionList: newQuestion._id } },
         { new: true }
       );
+
       const crtQ = await Question.findOneAndUpdate(
         { _id: newQuestion._id },
-        { $push: { examId: saerch[0]._id } }
+        { $push: { examId: search[0]._id } }
       );
+
       res.status(201).json(crtQ);
     } else {
-      res.status(401).json({ error: "Already ExamSerial Name exist" });
+      res.status(401).json({ error: "ExamSerial Name does not exist" });
     }
   } catch (error) {
     console.error(error);

@@ -137,55 +137,33 @@ const packageBuyer = async (req, res) => {
   const { packageUid, email } = req.body;
 
   try {
-    const search = await ExamPackage.findOne({ packageUid, premium: true });
     const free = await ExamPackage.findOne({ packageUid, premium: false });
 
-    const searchUser = await User.findOne({
-      email,
-      role: "Student",
-      myExam: { $nin: [search?._id] },
-    });
-
+    if (!free) {
+      return res.status(400).json({ error: "Not free" });
+    }
     const searchUse = await User.findOne({
       email,
       role: "Student",
       myExam: { $nin: [free?._id] },
     });
-    console.log(searchUse);
-    console.log(free?._id);
+
     if (!searchUse) {
       return res.status(400).json({ error: "You have already or Teacher" });
     }
-    if (search && searchUser) {
-      await ExamPackage.findOneAndUpdate(
-        { packageUid },
-        { $push: { packageBuyer: searchUser?._id } },
-        { new: true }
-      );
-      await User.findOneAndUpdate(
-        { email: searchUser?.email },
-        { $push: { myExam: search?._id } },
-        { new: true }
-      );
-      res.status(200).json({ message: "Purchase success" });
-    } else if (free && searchUse) {
+    if (free && searchUse) {
       await ExamPackage.findOneAndUpdate(
         { packageUid },
 
-        { $push: { packageBuyer: searchUser?._id } }
+        { $push: { packageBuyer: searchUse?._id } },
+        { new: true }
       );
       await User.findOneAndUpdate(
-        { email: searchUser?.email },
+        { email: searchUse?.email },
         { $push: { myExam: free._id } },
+        { new: true }
+      );
 
-        { $push: { packageBuyer: searchUser?._id } },
-        { new: true }
-      );
-      await User.findOneAndUpdate(
-        { email: searchUser?.email },
-        { $push: { myExam: free?._id } },
-        { new: true }
-      );
       res.status(200).json({ message: "Free Exam Added" });
     } else {
       res.status(400).json({ error: "You have already" });
@@ -251,38 +229,38 @@ const packageStatus = async (req, res) => {
 
 const packageRepost = async (req, res) => {
   const { id } = req.body;
-  console.log(req.body)
+  console.log(req.body);
   try {
     const search = await ExamPackage.findById({
       _id: id,
     });
 
     const currentDate = new Date();
-const sevenDaysLater = new Date(currentDate);
+    const sevenDaysLater = new Date(currentDate);
 
-// Add 7 days to the current date
-sevenDaysLater.setDate(currentDate.getDate() + 7);
+    // Add 7 days to the current date
+    sevenDaysLater.setDate(currentDate.getDate() + 7);
 
-// Extract year, month, and day
-const year = sevenDaysLater.getFullYear();
-const month = String(sevenDaysLater.getMonth() + 1).padStart(2, "0");
-const day = String(sevenDaysLater.getDate()).padStart(2, "0");
+    // Extract year, month, and day
+    const year = sevenDaysLater.getFullYear();
+    const month = String(sevenDaysLater.getMonth() + 1).padStart(2, "0");
+    const day = String(sevenDaysLater.getDate()).padStart(2, "0");
 
-const formattedDate = `${year}-${month}-${day}`;
+    const formattedDate = `${year}-${month}-${day}`;
 
-console.log(formattedDate);
+    console.log(formattedDate);
     const uid = Math.floor(100000 + Math.random() * 90000).toString();
 
     const newPackge = new ExamPackage({
       packageUid: uid,
-      nid:search.nid,
+      nid: search.nid,
       packageName: search.packageName,
       packageDetail: search.packageDetail,
       packageCreater: search.packageCreater,
       packageCreaterEmail: search.packageCreaterEmail,
       packageFee: search.packageFee,
       premium: search.premium,
-      publish:false,
+      publish: false,
       packageActive: true,
       examCategory: search.examCategory,
       examSubCategory: search.examSubCategory,

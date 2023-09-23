@@ -39,7 +39,7 @@ const ExamZone = () => {
         packageUid: uid,
         email: userData.userData.userInfo.email,
       });
-      console.log("ddd", data);
+      console.log("ddd", data.data.message);
       toast("Free Exam Added", {
         position: "top-right",
         autoClose: 2000,
@@ -98,7 +98,7 @@ const ExamZone = () => {
 
   console.log("setCategory(selectedOption)", category);
   console.log("datax", datax);
-
+  const id = userData?.userData?.userInfo?.id
   return (
     <div>
       <ToastContainer
@@ -166,38 +166,34 @@ const ExamZone = () => {
                           </p>
                           <p className="md:text-[24px] text-[14px] ">
                             {" "}
-                            পরীক্ষার সময়ঃ {item.examTime}
+
+                            পরীক্ষার ফি {item.packageFee}
                           </p>
                           <p className="md:text-[24px] text-[14px] ">
                             Total Examinee : {item.packageBuyer.length}
                           </p>
                         </div>
+               
 
-                        <button
-                          onClick={() => addExam(item.packageUid)}
-                          className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg"
-                        >
-                          {item.premium === true ? (
-                            <img
-                              src="https://i.ibb.co/H7wjCk9/image-56.png"
-                              alt=""
-                              className="w-5"
-                            />
-                          ) : (
-                            ""
-                          )}
-                          Participate Exam
-                        </button>
+                        {datax.some((exam) => exam.packageUid === item.packageUid && exam.packageBuyer.includes(id)) ? (
+
+                          <button
+                            className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg"
+                          >
+                            You added
+                          </button>
+
+                        ) : (
+                          <button
+                            onClick={() => addExam(item.packageUid)}
+                            className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg"
+                          >
+                            Participate Exam
+                          </button>
+                        )}
+
+
                       </div>
-
-
-                      <button
-                        onClick={() => addExam(item.packageUid)}
-                        className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg"
-                      >
-
-                        Participate Exam
-                      </button>
 
                     </div>
                   </div>

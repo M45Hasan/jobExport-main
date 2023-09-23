@@ -108,7 +108,7 @@ const PremiumZone = () => {
 
   console.log("setCategory(selectedOption)", category);
   console.log("datax", datax);
-
+  const id = userData?.userData?.userInfo?.id
   return (
     <div>
       <ToastContainer
@@ -175,17 +175,15 @@ const PremiumZone = () => {
                             পরীক্ষা শুরুঃ {item.examDate}
                           </p>
                           <p className="md:text-[24px] text-[14px] ">
-                            পরীক্ষার সময়ঃ {item.examTime}
+                            পরীক্ষার ফি {item.packageFee}
                           </p>
-                          <p className="md:text-[24px] text-[14px] ">
-                            Price : {item.packageFee} Taka
-                          </p>
+
                           <p className="md:text-[24px] text-[14px] ">
                             Total Examinee : {item.packageBuyer.length}
                           </p>
                         </div>
 
-                        <button
+                        {/* <button
                           onClick={() => addExam(item)}
                           className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg"
                         >
@@ -199,7 +197,33 @@ const PremiumZone = () => {
                             ""
                           )}
                           Participate Exam
-                        </button>
+                        </button> */}
+                        {datax.some((exam) => exam.packageUid === item.packageUid && exam.packageBuyer.includes(id)) ? (
+
+                          <button
+                            className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg"
+                          >
+                            <img
+                              src="https://i.ibb.co/H7wjCk9/image-56.png"
+                              alt=""
+                              className="w-5"
+                            />
+                            You added
+                          </button>
+
+                        ) : (
+                          <button
+                            onClick={() => addExam(item)}
+                            className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg"
+                          >
+                            <img
+                              src="https://i.ibb.co/H7wjCk9/image-56.png"
+                              alt=""
+                              className="w-5"
+                            />
+                            Participate Exam
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
