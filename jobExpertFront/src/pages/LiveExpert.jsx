@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import noexam from "../assets/brandLogo/noexam1.png";
 import axios from "../components/Axios/axios";
+import { ToastContainer, toast } from "react-toastify";
 
 import Button from "@mui/material/Button";
 const LiveExpert = () => {
@@ -60,7 +61,7 @@ const LiveExpert = () => {
   // match my purchase 
 
   const id = userData?.userData?.userInfo?.id
-  console.log(todayExam)
+  console.log(id)
 
   const addExam = async (item) => {
     console.log(item)
@@ -93,24 +94,55 @@ const LiveExpert = () => {
         packageUid: uid,
         email: userData.userData.userInfo.email,
       });
-      console.log("ddd", data);
+      toast(`${data.data.message ? data.data.message : data.data.error}`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
 
     } catch (e) {
-      console.log(e.code)
+      toast(` ${e.code}`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
     }
   };
 
   // add fab 
 
-  
+
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       {/* banner section  */}
       <Banner />
       <div className="w-11/12 md:w-4/5 mx-auto pb-16">
         <div className="pl-4 md:pl-12 mt-16 mb-[64px]">
           <ExamDropdown
-            titel={"পরিক্ষাঃ"}
+            titel={"পরীক্ষা"}
             dataFromeChild={reciveDataFromChild}
             models={(selectedOption) => {
 
@@ -141,24 +173,26 @@ const LiveExpert = () => {
                 <p className="md:text-[24px] text-[14px] my-[10px]">
                   {item.packageDetail}
                 </p>
-                <div className="flex md:flex-row flex-col gap-x-0 md:gap-x-10  justify-evenly md:justify-start items-start md:items-center">
+                <div className="flex md:flex-row flex-col gap-x-0 md:gap-x-10  justify-center md:justify-start items-start md:items-center">
                   <div>
                     <p className="md:text-[24px] text-[14px] ">
                       পরীক্ষা শুরুঃ {item.examDate}
                     </p>
                     <p className="md:text-[24px] text-[14px] ">
                       {" "}
-                      পরীক্ষার সময়ঃ {item.examTime}
+
+                      পরীক্ষার ফি {item.packageFee}
                     </p>
                     <p className="md:text-[24px] text-[14px] ">
                       Total Examinee : {item.packageBuyer.length}
                     </p>
                   </div>
 
-                  {item.premium == true ? (
-                    todayExam.some(item => item.packageBuyer.includes(id)) ?
+
+                  {item.premium ? (
+                    todayExam.some((exam) => exam.packageUid === item.packageUid && exam.packageBuyer.includes(id)) ? (
                       <Link to={`examPaper/${item._id}`}>
-                        <button className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg">
+                        <button className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-x-2 px-16 rounded-lg">
                           <img
                             src="https://i.ibb.co/H7wjCk9/image-56.png"
                             alt=""
@@ -166,8 +200,12 @@ const LiveExpert = () => {
                           />
                           Start Now
                         </button>
-                      </Link> :
-                      <button onClick={() => addExam(item)} className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg">
+                      </Link>
+                    ) : (
+                      <button
+                        onClick={() => addExam(item)}
+                        className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-x-2 px-16 rounded-lg"
+                      >
                         <img
                           src="https://i.ibb.co/H7wjCk9/image-56.png"
                           alt=""
@@ -175,19 +213,25 @@ const LiveExpert = () => {
                         />
                         Buy Now
                       </button>
-
+                    )
                   ) : (
-                    todayExam.some(item => item.packageBuyer.includes(id)) ?
+                    todayExam.some((exam) => exam.packageUid === item.packageUid && exam.packageBuyer.includes(id)) ? (
                       <Link to={`examPaper/${item._id}`}>
                         <button className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg">
                           Start Now
                         </button>
-                      </Link> :
-                      <button onClick={() => addExamm(item.packageUid)} className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg">
+                      </Link>
+                    ) : (
+                      <button
+                        onClick={() => addExamm(item.packageUid)}
+                        className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg"
+                      >
                         Add
                       </button>
-
+                    )
                   )}
+
+
 
 
                 </div>

@@ -28,11 +28,13 @@ const Favourite = () => {
 
 
   const [show, setShow] = useState(false)
+  const [datax, setDatax] = useState([])
   const handleCLick = (a) => {
-    setShow(a)
+    setShow(!show)
+    setDatax(a)
 
   }
-
+  console.log(datax)
 
   const deleteFun = (del) => {
     const how = async () => {
@@ -57,38 +59,38 @@ const Favourite = () => {
               {useInfo.myFab?.map((info, fi) => (
                 <li key={fi} className="mt-2">
                   <div
-                    onClick={() => handleCLick(info.packageName)}
+                    onClick={() => handleCLick(info)}
                     className="flex cursor-pointer flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 hover:bg-blue-200 text-gray-500 hover:text-[#9D0C09]"
                   >
-                    <span className="text-sm font-medium">{info.packageName.slice(0,30)}</span>
+                    <span className="text-sm font-medium">{info.packageName.slice(0, 30)}</span>
                   </div>
                 </li>
               ))}
             </ul>
           </div>
-          {show &&
-            <div className="flex-grow p-4 max-h-[500px] overflow-y-auto scrollbar-hide mr-[10%]">
-              {useInfo.myFab?.map((info, fi) => (
-                <div key={fi} className=" relative rounded-lg bg-[#33c35a] shadow-md p-4 mb-4">
-                  <h2 className="text-lg inline font-semibold">{info.examCategory} : {info.examSubCategory}</h2>
-                  <button className="text-base absolute right-2 top-1 font-medium text-[#f14242]" onClick={() => deleteFun(info._id)}>X</button>
 
-                  {info.qestionList.map((question, qi) => (
-                    <div key={qi} className=" mb-4 ">
-                      <h3 className="text-base font-medium">{`Question ${qi + 1}:`}</h3>
-                      <div
-                        dangerouslySetInnerHTML={{ __html: question.whatIsTheQuestion }}
-                        className="text-gray-700"
-                      />
-                      <h3 className="text-base font-medium">Answer:</h3>
-                      <p className="text-gray-700">{question.ansDetail}</p>
-                    </div>
-                  ))}
+          <div className="flex-grow p-4 max-h-[500px] overflow-y-auto scrollbar-hide mr-[10%]">
+            {useInfo?.myFab?.map((info, fi) => (
+              <div key={fi} className=" relative rounded-lg bg-[#9cc5df] shadow-md p-4 mb-4">
+                <h2 className="text-lg inline font-semibold">{info.examCategory} : {info.examSubCategory}</h2>
+                <button className="text-base absolute right-2 top-1 font-medium text-[#f14242]" onClick={() => deleteFun(info._id)}>X</button>
 
-                </div>
-              ))}
-            </div>
-          }
+                {datax?.qestionList?.map((question, qi) => (
+                  <div key={qi} className=" mb-4 ">
+                    <h3 className="text-base font-medium">{`Question ${qi + 1}:`}</h3>
+                    <div
+                      dangerouslySetInnerHTML={{ __html: question.whatIsTheQuestion }}
+                      className="text-gray-700"
+                    />
+                    <h3 className="text-base font-medium">Answer:</h3>
+                    <p className="text-gray-700">{question.ansDetail}</p>
+                  </div>
+                ))}
+
+              </div>
+            ))}
+          </div>
+
         </div>
       </div>
 
