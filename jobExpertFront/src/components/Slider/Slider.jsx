@@ -28,7 +28,7 @@ const Slider = () => {
           <img className="w-full" src={courseDetails} />
         </SwiperSlide>
         <SwiperSlide>
-          <img className="w-full" src={courseDetails2} />
+          <img className="w-full" src={courseDetails} />
         </SwiperSlide>
       </Swiper>
     </>

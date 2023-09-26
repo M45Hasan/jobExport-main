@@ -108,7 +108,7 @@ const PremiumZone = () => {
 
   console.log("setCategory(selectedOption)", category);
   console.log("datax", datax);
-  const id = userData?.userData?.userInfo?.id
+  const id = userData?.userData?.userInfo?.id;
   return (
     <div>
       <ToastContainer
@@ -198,11 +198,12 @@ const PremiumZone = () => {
                           )}
                           Participate Exam
                         </button> */}
-                        {datax.some((exam) => exam.packageUid === item.packageUid && exam.packageBuyer.includes(id)) ? (
-
-                          <button
-                            className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg"
-                          >
+                        {datax.some(
+                          (exam) =>
+                            exam.packageUid === item.packageUid &&
+                            exam.packageBuyer.includes(id)
+                        ) ? (
+                          <button className="bg-primary mx-auto mt-[10px] md:mt-0 text-[#FFFFFF] flex justify-center items-center py-3 gap-2 px-16 rounded-lg">
                             <img
                               src="https://i.ibb.co/H7wjCk9/image-56.png"
                               alt=""
@@ -210,7 +211,6 @@ const PremiumZone = () => {
                             />
                             You added
                           </button>
-
                         ) : (
                           <button
                             onClick={() => addExam(item)}
@@ -240,7 +240,7 @@ const PremiumZone = () => {
                 NO Exams Available{" "}
               </h2>
               <img
-                className="block mx-auto text-center"
+                className="block w-[50%] md:w-[30%] mx-auto text-center"
                 src={noexam}
                 alt="No Exams Available"
               />

@@ -30,6 +30,7 @@ const Question = ({ examSerials, NID }) => {
     rightAnsOne: "",
     rightAnsTwo: "",
     ansDetail: "",
+    infosources: "",
     rightMark: "",
     wrongMark: "",
   });
@@ -94,6 +95,7 @@ const Question = ({ examSerials, NID }) => {
         optionC: info.optionC,
         optionD: info.optionD,
         rightAnsOne: info.rightAnsOne,
+        rightAnsTwo: info.infosources,
         ansDetail: info.ansDetail,
         rightMark: info.rightMark,
         wrongMark: info.wrongMark,
@@ -128,7 +130,7 @@ const Question = ({ examSerials, NID }) => {
   const onEditorStateChange = (editorState) => {
     setDescription(editorState);
   };
-
+  console.log(info);
   return (
     <>
       <div className="flex">
@@ -250,7 +252,15 @@ const Question = ({ examSerials, NID }) => {
               <TextField
                 onChange={handetype}
                 name="ansDetail"
-                label="ans Detail"
+                label="Ans Details"
+                placeholder="Ans Details"
+                fullWidth
+              />
+              <TextField
+                onChange={handetype}
+                name="infosources"
+                label="Info sources"
+                placeholder="Info sources"
                 fullWidth
               />
               {error.rightMark && (

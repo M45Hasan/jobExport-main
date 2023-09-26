@@ -1,6 +1,5 @@
+const url = {
+  apy: "http://localhost:5000",
+};
 
-const url={
-    apy:"http://localhost:5000"
-}
-
-export default url.apy
+export default url.apy;

@@ -12,7 +12,7 @@ const Footer = () => {
     <div className="pt-16 mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-items-start md:justify-items-center items-center gap-5 bg-[#000000] py-16 px-10 md:px-16">
         {/* logo and icon */}
-        <div className="md:max-w-md flex justify-center ">
+        <div className="md:max-w-md flex items-center justify-center ">
           <div>
             <a
               href="/"
@@ -27,7 +27,7 @@ const Footer = () => {
                 <Icon
                   icon="mdi:twitter"
                   width={30}
-                  className="text-[#FFFFFF] transform hover:-translate-y-2 duration-300"
+                  className="text-[#FFFFFF] text-xs transform hover:-translate-y-2 duration-300"
                 />
               </a>
               <a href="/">
@@ -56,11 +56,11 @@ const Footer = () => {
         </div>
 
         <div className=" md:px-0 py-10 md:py-0">
-          <p className="font-semibold tracking-wide text-lg text-[#FFFFFF]">
+          <p className="font-semibold tracking-wide text-base md:text-lg text-[#FFFFFF]">
             Contact
           </p>
           <ul className="mt-2 space-y-2">
-            <li>
+            <li className="!text-base md:!text-lg">
               <a
                 className="text-[#FFFFFF] flex items-center gap-3 pt-3"
                 href="tel:+880 1700-000000"
@@ -71,7 +71,7 @@ const Footer = () => {
                 </p>
               </a>
             </li>
-            <li>
+            <li className="!text-base md:!text-lg">
               <a
                 className="text-[#FFFFFF] flex items-center gap-3 pt-3"
                 href="tel:+880 1521575970"
@@ -83,12 +83,12 @@ const Footer = () => {
               </a>
             </li>
 
-            <li className="-ml-1">
+            <li className="-ml-1 !text-base md:!text-lg">
               <a
                 className="text-[#FFFFFF] flex items-center gap-3 pt-3"
                 href="tel:+880 1700-000000"
               >
-                <Icon icon="mdi:location" width={40} />
+                <Icon icon="mdi:location" className="text-3xl" />
                 <p className="transform hover:translate-x-2 duration-300 ">
                   Dhaka, Bangladesh
                 </p>
@@ -102,21 +102,21 @@ const Footer = () => {
             Exam
           </p>
           <ul className="mt-2 space-y-2 pt-3">
-            <li>
+            <li className="!text-base md:!text-lg">
               <a href="/">
                 <p className="text-[#FFFFFF] transform hover:translate-x-2 duration-300">
                   বিসিএস প্রিলি প্রস্তুতি
                 </p>
               </a>
             </li>
-            <li>
+            <li className="!text-base md:!text-lg">
               <a href="/">
                 <p className="text-[#FFFFFF] transform hover:translate-x-2 duration-300">
                   জব সল্যুশন
                 </p>
               </a>
             </li>
-            <li>
+            <li className="!text-base md:!text-lg">
               <a
                 href="/"
                 className="text-[#FFFFFF] transform hover:translate-x-2 duration-300"
@@ -127,7 +127,7 @@ const Footer = () => {
                 </p>
               </a>
             </li>
-            <li>
+            <li className="!text-base md:!text-lg">
               <a
                 href="/"
                 className="text-[#FFFFFF] transform hover:translate-x-2 duration-300"
@@ -152,17 +152,17 @@ const Footer = () => {
       </div>
 
       <div className="">
-        <p className="text-base py-4 text-center text-gray-600">
-          Copyright ©{getCurrentYear()} Job Expert Developed by{" "}
+        <small className=" py-4 px-10 md:px-0 inline-block text-center text-gray-600">
+          Copyright ©{getCurrentYear()} Job Expert BD. All rights reserved
+          Developed by{" "}
           <a href="https://weepoka.com/" target="_blank">
             <img
-              className="md:w-[10%] w-[40%] inline-block"
+              className="md:w-[6%] w-[20%] inline-block"
               src={logof}
               alt=""
             />
           </a>
-          . All rights reserved.
-        </p>
+        </small>
       </div>
     </div>
   );

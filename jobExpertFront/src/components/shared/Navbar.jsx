@@ -35,7 +35,7 @@ function Navbar() {
   const dipatch = useDispatch();
   const userData = useSelector((state) => state);
   const navigate = useNavigate();
-  const rmail = userData?.userData?.userInfo?.email
+  const rmail = userData?.userData?.userInfo?.email;
   React.useEffect(() => {
     if (userData?.userData?.userInfo?.verify == true) {
       setShow(true);
@@ -162,12 +162,6 @@ function Navbar() {
                 display: { xs: "block", md: "none" },
               }}
             >
-
-            
-
-              
-
-
               {show ? (
                 <>
                   <Link to={"/"}>
@@ -281,9 +275,9 @@ function Navbar() {
                   ""
                 )}
 
-
-
-                {rmail === "aminr1384@gmail.com" || rmail === "eftehstu999@gmail.com" || rmail === "mmhasan045@gmail.com" ? (
+                {rmail === "aminr1384@gmail.com" ||
+                rmail === "eftehstu999@gmail.com" ||
+                rmail === "mmhasan045@gmail.com" ? (
                   <Link to={"/jobexpart/admin"}>
                     <Button sx={{ marginRight: "20px" }} variant="contained">
                       Admin Panel
@@ -312,7 +306,7 @@ function Navbar() {
                         {hideen && (
                           <div
                             onClick={() => setNotification(false)}
-                            className=" absolute rounded-md border  top-[380%] z-50 left-[-158px] w-[200px] text-white bg-slate-400 p-2 "
+                            className=" absolute rounded-md border top-[380%] z-50 left-[-158px] w-[200px] text-white bg-white p-2 "
                           >
                             <div className="flex items-center text-center text-xs justify-center gap-x-4">
                               <ul>

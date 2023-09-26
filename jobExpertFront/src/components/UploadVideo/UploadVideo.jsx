@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "../Axios/axios"; // You'll need to import Axios or use your preferred HTTP library
 import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 
 const UploadVideo = () => {
-  let selector = useSelector((state) => state);
+  const selector = useSelector((state) => state);
   const [formData, setFormData] = useState({
     email: selector.userData.userInfo.email,
     subject: "",
@@ -21,57 +22,74 @@ const UploadVideo = () => {
     e.preventDefault();
 
     try {
-      // Make a POST request to your server to create the video
       await axios.post("/jobExpert/api/v1/video-upload", formData);
 
-      // Optionally, you can show a success message or redirect the user
-      alert("Video uploaded successfully!");
+      toast.success("Successfully uploaded", {
+        position: "bottom-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
 
-      // Clear the form after successful submission
       setFormData({
-        email: "",
+        ...formData,
         subject: "",
         text: "",
         title: "",
         videoUrl: "",
       });
+
+      // Fetch the updated video list after upload
+      fetchVideos();
     } catch (error) {
       console.error(error);
-      // Handle errors, show an error message, or redirect the user accordingly
       alert("Error uploading video.");
     }
   };
 
   const [videos, setVideos] = useState([]);
 
-  useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        const response = await axios.get("/jobExpert/api/v1/video-upload");
-        setVideos(response.data);
-      } catch (error) {
-        console.error(error);
-        alert("Error fetching videos.");
-      }
-    };
+  const fetchVideos = async () => {
+    try {
+      const response = await axios.get("/jobExpert/api/v1/video-upload");
+      setVideos(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
+  useEffect(() => {
     fetchVideos();
   }, []);
 
   const handleDelete = async (videoId) => {
     try {
       await axios.delete(`/jobExpert/api/v1/video-upload/${videoId}`);
-      // After successful deletion, filter out the deleted video from the videos state
-      setVideos((prevVideos) =>
-        prevVideos.filter((video) => video._id !== videoId)
-      );
-      alert("Video deleted successfully.");
+      toast.success("Successfully Deleted", {
+        position: "bottom-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
+      // Wait for the toast to disappear before updating the state
+      setTimeout(() => {
+        setVideos((prevVideos) =>
+          prevVideos.filter((video) => video._id !== videoId)
+        );
+      }, 1000); // Wait for 1 second (the toast autoClose duration)
     } catch (error) {
       console.error(error);
-      alert("Error deleting video.");
     }
   };
-
   return (
     <>
       <div className="p-4 bg-white rounded-lg shadow-md">

@@ -140,7 +140,7 @@ export default function singup() {
               </Box>
 
               <Typography component="h1" variant="h5" sx={{ fontSize: "16px" }}>
-                ই-মেইল অথবা ফোন নাম্বার দিয়ে রেজিস্ট্রেশন করুন
+                ই-মেইল দিয়ে রেজিস্ট্রেশন করুন
               </Typography>
 
               <TextField
@@ -160,14 +160,14 @@ export default function singup() {
                 margin="normal"
                 fullWidth
                 id="email"
-                label="ই-মেইল অথবা ফোন নাম্বার লিখুন"
+                label="ই-মেইল লিখুন"
                 name="email"
                 autoComplete="email"
                 onChange={handelInput}
                 autoFocus
               />
               {errors.email && (
-                <p className="text-red-500 text-lg">Email/phone is required</p>
+                <p className="text-red-500 text-lg">Email is required</p>
               )}
               {/* <TextField
                 margin="normal"
@@ -210,11 +210,11 @@ export default function singup() {
               )}
               <div className="mt-2 w-full">
                 <FormControl fullWidth variant="outlined">
-                  <InputLabel htmlFor="outlined-adornment-password">
+                  <InputLabel htmlFor="outlined-adornment-ConfirmPassword">
                     Confirm Password
                   </InputLabel>
                   <OutlinedInput
-                    id="outlined-adornment-password"
+                    id="outlined-adornment-ConfirmPassword"
                     fullWidth
                     name="pass"
                     onChange={handelInput}
@@ -229,7 +229,7 @@ export default function singup() {
                         ></IconButton>
                       </InputAdornment>
                     }
-                    label="Password"
+                    label="ConfirmPassword"
                   />
                 </FormControl>
               </div>
@@ -288,7 +288,7 @@ export default function singup() {
                 )}
               </div>
 
-              <Box
+              {/* <Box
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
@@ -306,7 +306,7 @@ export default function singup() {
                 ></Box>
                 <Box sx={{ mx: 2 }}>OR</Box>
                 <Box sx={{ flex: 1, border: "1px solid  #808080" }}></Box>
-              </Box>
+              </Box> */}
             </Box>
 
             {/* google and facebook login button */}
