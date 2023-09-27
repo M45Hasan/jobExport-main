@@ -168,16 +168,16 @@ const Favourite = () => {
                                               <div className="circle-option circle mr-2 my-2  bg-green-500 text-white flex items-center justify-center w-6 h-6 font-semibold">
                                                 {option}
                                               </div>
-                                              <p className="text-gray-800 bg-green-600 inline-block font-semibold" >
+                                              <p className="text-white  bg-green-600 inline-block font-semibold" >
                                                 {question[`option${option.toUpperCase()}`]}
                                               </p>
                                             </>}
                                           {question.rightAnsOne.split("")[6].toLowerCase() !== itm.answer.split("")[6].toLowerCase() &&
                                             <>
-                                              <div className="circle-option circle mr-2 my-2  bg-red-500 text-white flex items-center justify-center w-6 h-6 font-semibold">
+                                              <div className="circle-option circle mr-2 my-2  bg-blue-500 text-white flex items-center justify-center w-6 h-6 font-semibold">
                                                 {option}
                                               </div>
-                                              <p className="text-gray-800 bg-red-600 inline-block font-semibold" >
+                                              <p className=" bg-red-600 inline-block text-white  font-semibold" >
                                                 {question[`option${option.toUpperCase()}`]}
                                               </p>
                                             </>}
@@ -195,11 +195,16 @@ const Favourite = () => {
                                           </p>
 
                                           {question.rightAnsOne.split("")[6].toLowerCase() === option &&
-                                            <div className="translate-y-[-40px] ">
-                                              <div className="circle-option circle mr-2 my-2  bg-green-500 text-white flex items-center justify-center w-6 h-6 font-semibold">
-                                                {option}
+                                            <div className="relative">
+                                              <div className="invisible opacity-0 hidden ">
+                                                <div className="circle-option circle mr-2 my-2  bg-green-500 text-white flex items-center justify-center w-6 h-6 font-semibold">
+                                                  {option}
+                                                </div>
+                                                {/* <p className="text-white  bg-green-600 inline-block font-semibold" >
+                                                {question[`option${option.toUpperCase()}`]}
+                                              </p> */}
                                               </div>
-                                              <p className="text-gray-800 bg-green-600 inline-block font-semibold" >
+                                              <p className="text-white  bg-green-600 inline-block font-semibold absolute top-[-33px] left-[33px]" >
                                                 {question[`option${option.toUpperCase()}`]}
                                               </p>
                                             </div>}
