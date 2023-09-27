@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import axios from "../Axios/axios";
 import { useSelector } from "react-redux";
 import pdf from "../../assets/brandLogo/pdf.png";
-
+import { ToastContainer, toast } from "react-toastify";
 import ExamDropdown from "../ExamDropdown/ExamDropdown";
 const UploadPDF = () => {
   let userD = useSelector((state) => state);
@@ -31,7 +31,6 @@ const UploadPDF = () => {
   let [rander, setRander] = useState(false);
 
   const handleFileUpload = async () => {
-    setRander(!rander);
     const formData = new FormData();
     formData.append("pdf", selectedFile);
 
@@ -47,8 +46,18 @@ const UploadPDF = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+      toast.success("Successfully upload", {
+        position: "bottom-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setRander(!rander);
     } catch (error) {
-      alert("Error uploading file.");
       console.error(error);
     }
   };
@@ -61,21 +70,42 @@ const UploadPDF = () => {
       try {
         let data = await axios.get(`/jobExpert/api/v1/upload-pdf`);
         setPdf(data.data);
-        setRander(!rander);
       } catch (error) {
         console.error(error);
       }
     };
 
     fetchData(); // Initial fetch when component mounts
-  }, []);
+  }, [rander]);
 
   // Delete PDF
   const handelDelete = async (pdfUrl) => {
     try {
       await axios.delete(`/jobExpert/api/v1/upload-pdf/${pdfUrl}`);
-      alert("File deleted successfully.");
+      toast.success("Successfully Delete", {
+        position: "bottom-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setRander(!rander);
     } catch (error) {
+      toast.success("Successfully Delete", {
+        position: "bottom-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setRander(!rander);
+
       console.error(error);
     }
   };
@@ -87,6 +117,18 @@ const UploadPDF = () => {
     <>
       <div className="p-4 bg-white rounded-lg shadow-md">
         <div className="mb-4">
+          <ToastContainer
+            position="bottom-center"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
           <label htmlFor="options" className="text-gray-600 font-medium">
             Select an Option
           </label>

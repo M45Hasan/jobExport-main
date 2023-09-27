@@ -308,7 +308,7 @@ const login = () => {
                 <img src={logo} alt="" />
               </Box>
               <Typography component="h1" variant="h5" sx={{ fontSize: "16px" }}>
-                ই-মেইল অথবা ফোন নাম্বার দিয়ে লগ-ইন করুন
+                ই-মেইল দিয়ে লগ-ইন করুন
               </Typography>
               <Box
                 component="form"
@@ -323,7 +323,7 @@ const login = () => {
                   required
                   fullWidth
                   id="email"
-                  label="ই-মেইল অথবা ফোন নাম্বার"
+                  label="ই-মেইল "
                   name="email"
                   autoComplete="email"
                   autoFocus
@@ -386,18 +386,29 @@ const login = () => {
                 >
                   লগ-ইন করুন
                 </Button>
+                <Link to="/singup">
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    sx={{
+                      mb: 2,
+                      pt: 1.5,
+                      backgroundColor: "#26A4DE",
+                      "&:hover": {
+                        backgroundColor: "#26A4DE",
+                      },
+                      fontSize: "16px",
+                    }}
+                  >
+                    রেজিস্ট্রেশন করুন
+                  </Button>
+                </Link>
               </Box>
-              <div className="flex justify-between items-center">
-                <Link to="/singup" variant="body2">
-                  <p className="font-bold">
-                    Don't have an account?{" "}
-                    <span className="text-[#26A4DE] text-lg"> Sign Up</span>
-                  </p>
-                </Link>
-                <Link onClick={handleOpen} variant="body2">
-                  <p className=" ml-6"> Forgot password? </p>
-                </Link>
-              </div>
+
+              <Link onClick={handleOpen} variant="body2">
+                <p className="ml-6"> Forgot password? </p>
+              </Link>
+
               <Box>
                 <Grid container>
                   <Grid item xs={8} textAlign="left"></Grid>

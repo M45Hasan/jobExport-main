@@ -4,6 +4,8 @@ import axios from "../Axios/axios";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { ToastContainer, toast } from "react-toastify";
+
 const AllPackege = () => {
   let data = useSelector((state) => state);
   let [packages, setPackages] = useState([]);
@@ -38,7 +40,16 @@ const AllPackege = () => {
       });
       setDeData(res.data);
       setRander(!rander);
-      console.log(dedata);
+      toast.success("Successfully Delete", {
+        position: "bottom-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } catch (error) {
       console.log(error);
     }

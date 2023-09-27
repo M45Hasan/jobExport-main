@@ -341,7 +341,8 @@ export default function TeacherPanel() {
                 <TextField
                   onChange={handetype}
                   name="examDuration"
-                  label="Exam Duration"
+                  label="Exam Duration in minutes"
+                  placeholder="Exam Duration in minutes"
                   fullWidth
                   type="number"
                 />

@@ -57,6 +57,16 @@ const GetUnderPackegQution = ({ rander }) => {
       await axios.post("/jobExpert/api/v1/deletequestion", {
         id: id,
       });
+      toast.success("Successfully Delete", {
+        position: "bottom-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       getData();
     } catch (e) {
       if (e.code) {

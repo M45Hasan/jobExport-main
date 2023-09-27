@@ -109,7 +109,7 @@ const StudentProfile = () => {
         {hide && (
           <div className=" overflow-x-hidden   absolute z-20 shadow-2xl   left-[11%] border-gray-700">
             <div className=" flex justify-center flex-col items-center">
-              <div className="mt-4  mb-3 ml-auto rounded-sm bg-green-400  text-sm max-w-[181px]">
+              <div className="mt-4  mb-3 ml-auto rounded-sm  text-sm max-w-[181px]">
                 <input
                   placeholder="User image "
                   name="avatar"
@@ -139,15 +139,13 @@ const StudentProfile = () => {
             {userDa.userData.userInfo.email}
           </p>
           <p className="text-md lg:text-4xl   text-[#gray-300 ]dark:text-gray-400 pb-1">
-            User-Id:{userDa.userData.userInfo.nid}
+            Reg. No:{userDa.userData.userInfo.nid}
           </p>
         </div>
       </div>
 
       {/* students tabs  */}
-      {userDa?.userData?.userInfo?.role === "Student" &&
-        <StudentTabs />
-      }
+      {userDa?.userData?.userInfo?.role === "Student" && <StudentTabs />}
     </>
   );
 };

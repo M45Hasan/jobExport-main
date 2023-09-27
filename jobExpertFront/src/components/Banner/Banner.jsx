@@ -1,4 +1,4 @@
-import homeimg from "../../assets/slider/Frame 72.png";
+import homeimg from "../../assets/brandLogo/main-banner-jobexpertbd-01.webp";
 
 const Banner = () => {
   return (
