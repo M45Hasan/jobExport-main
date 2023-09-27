@@ -20,13 +20,14 @@ const front_url = process.env.ROOTB;
 const tran_id = new ObjectId().toString();
 const sslRequest = async (req, res) => {
   const { nid, name, email, packageUid, packageName, examCategory } = req.body;
+  console.log(packageUid);
   const pack = await ExamPackage.findOne({ packageUid });
 
   const dataa = {
     total_amount: parseInt(pack?.packageFee),
     currency: "BDT",
     tran_id: tran_id,
-    success_url: `${back_url}/ssl-payment-success/${tran_id}`,
+    success_url: `${back_url}/ssl-payment-success/${tran_id}?packageUid=${packageUid}`,
     fail_url: `${back_url}/ssl-payment-fail/${tran_id}`,
     cancel_url: `${back_url}/ssl-payment-cancel/${tran_id}`,
     shipping_method: "No",
@@ -76,12 +77,24 @@ const sslRequest = async (req, res) => {
   });
 };
 const sslSuccess = async (req, res) => {
-  const { tran_id, packageUid } = req.params;
-  console.log("ami tran", tran_id);
+  const { tran_id } = req.params;
+  const { packageUid } = req.query;
+  console.log("ami uid", packageUid);
   try {
     const mx = await User.findOne({ orderId: tran_id });
-
+    console.log("hellooooooo");
     if (!mx) {
+      return res.redirect(`${front_url}/fail/${tran_id}`);
+    }
+
+    const lo = mx.myExam.includes(mx.orderPk);
+
+    if (lo) {
+      await User.findByIdAndUpdate(
+        { _id: mx._id },
+        { $set: { orderId: "", orderPk: "" } },
+        { new: true }
+      );
       return res.redirect(`${front_url}/fail/${tran_id}`);
     }
 
@@ -92,10 +105,10 @@ const sslSuccess = async (req, res) => {
     );
     const ml = await ExamPackage.findOneAndUpdate(
       { packageUid },
-      { $push: { packageBuyer: mu?._id } },
+      { $push: { packageBuyer: mx._id } },
       { new: true }
     );
-    console.log(ml);
+    console.log("meeeoeo", ml);
     const sub = "purchase success";
     const code = mx.orderPk;
     const email = mx.email;

@@ -20,6 +20,7 @@ import DailyQuiz from "./pages/DailyQuiz";
 import Dictionary from "./pages/Dictionary";
 import PremiumZone from "./pages/PremiumZone";
 import PdfSupport from "./pages/PdfSupport";
+import Job from "./pages/Job";
 
 
 import PaymentFail from "./pages/paymentFail";
@@ -49,6 +50,7 @@ const router = createBrowserRouter(
         <Route path="video" element={<VideoSupport />}></Route>
         <Route path="pdfSupport" element={<PdfSupport />}></Route>
         <Route path="dictionary" element={<Dictionary />}></Route>
+        <Route path="circular" element={<Job/>}></Route>
 
         <Route path="socialMediya" element={<SocialMediya />}></Route>
 

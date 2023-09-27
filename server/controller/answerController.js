@@ -6,7 +6,7 @@ const ExamPackage = require("../model/examPackage");
 const Exam = require("../model/examModel");
 const Question = require("../model/questionModel");
 const Answer = require("../model/ansModel");
-const Paper = require("../model/examPaperModel"); 
+const Paper = require("../model/examPaperModel");
 const { mongo } = require("mongoose");
 
 const createExamPaper = async (req, res) => {
@@ -56,7 +56,7 @@ const myFab = async (req, res) => {
   const { packageUid, std } = req.body;
   console.log(packageUid);
   try {
-    const user = await User.findById(std);
+    const user = await User.findById({ _id: std });
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -70,7 +70,10 @@ const myFab = async (req, res) => {
     if (!search) {
       return res.status(404).json({ error: "Package not found for this user" });
     }
-
+    const ifin = user.myFab.includes(search._id);
+    if (ifin) {
+      return res.status(400).json({ error: "You have already " });
+    }
     const updatedUser = await User.findOneAndUpdate(
       { _id: user._id },
       { $push: { myFab: search._id } },
@@ -90,7 +93,10 @@ const getFab = async (req, res) => {
   const { email } = req.body;
 
   try {
-    const packageWithQuestions = await User.findOne({ email }).populate({
+    const packageWithQuestions = await User.findOne({
+      email
+      
+    }).populate({
       path: "myFab",
       populate: {
         path: "qestionList",
@@ -162,22 +168,117 @@ const createAnswer = async (req, res) => {
   }
 };
 
+// const resultPulish = async (req, res) => {
+//   const { examTrack, examineeId } = req.body;
+//   console.log(examTrack, examineeId);
+
+//   try {
+//     const answers = await Answer.find({
+//       exampaperid: examTrack,
+//       examineeId: examineeId,
+//     });
+//     console.log("ans", answers);
+//     const user = await User.findOne({ _id: examineeId });
+//     console.log("userResult:", user);
+
+//     if (!answers || !user) {
+//       return res.status(404).json({ message: "Answers or user not found" });
+//     }
+
+//     var rightMarks = 0;
+//     var rightCount = 0;
+//     var wrongMarks = 0;
+//     var wrongCount = 0;
+//     var comment = "";
+
+//     for (const answer of answers) {
+//       const question = await Question.findOne({
+//         examTrack: examTrack,
+//         serial: answer.serial,
+//       });
+
+//       if (question) {
+//         if (answer.answer === question.rightAnsOne) {
+//           rightMarks += question.rightMark;
+//           rightCount += 1;
+//         } else {
+//           wrongMarks += question.wrongMark;
+//           wrongCount += 1;
+//         }
+//       }
+//     }
+
+//     const getMark = rightMarks - wrongMarks;
+//     const percentage = (rightCount / (rightCount + wrongCount)) * 100;
+//     console.log("percentage:", percentage);
+//     console.log("getMark:", getMark);
+
+//     if (percentage >= 85) {
+//       comment = "Excellent";
+//       console.log(comment);
+//     } else if (percentage >= 70 && percentage <= 84) {
+//       comment = "Good Shape";
+//       console.log(comment);
+//     } else if (getMark >= 60 && getMark <= 69) {
+//       comment = "Need More Efforts";
+//       console.log(comment);
+//     } else if (percentage >= 40 && percentage <= 59) {
+//       comment = "Try again & Practice more";
+//       console.log(comment);
+//     } else {
+//       comment = "Keep pushing & Try ...";
+//       console.log(comment);
+//     }
+
+//     const updatedPaper = await Paper.findOneAndUpdate(
+//       { examineeId:user._id, packageUid:examTrack},
+//       {
+//         $set: {
+//           mark: getMark,
+//           rightans: rightCount,
+//           wrongans: wrongCount,
+//           show: true,
+//           rightmark: rightMarks,
+//           wrongmark: wrongMarks,
+//           percentage: isNaN(percentage) ? 0 : parseFloat(percentage),
+//           coment: comment,
+//         },
+//       },
+//       { new: true }
+//     );
+
+//     console.log("ami result", updatedPaper);
+
+//     res.status(200).json(updatedPaper);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "An error occurred" });
+//   }
+// };
+
+// const resultPulish = async (req, res) => {
+//   const { examTrack, examineeId } = req.body;
+//   console.log(examTrack, examineeId);
+//   calculateMarks(examTrack, examineeId, res);
+// };
 const resultPulish = async (req, res) => {
   const { examTrack, examineeId } = req.body;
-  console.log(examTrack, examineeId);
 
   try {
+    // Validate inputs here if necessary.
+
     const answers = await Answer.find({
       exampaperid: examTrack,
       examineeId: examineeId,
     });
-    console.log("ans", answers);
+
     const user = await User.findOne({ _id: examineeId });
-    console.log("user", user);
 
     if (!answers || !user) {
       return res.status(404).json({ message: "Answers or user not found" });
     }
+
+    // Initialize variables for calculations.
 
     let rightMarks = 0;
     let rightCount = 0;
@@ -202,39 +303,42 @@ const resultPulish = async (req, res) => {
       }
     }
 
-    const getMark = rightMarks - wrongMarks;
-    const percentage = (rightCount / (rightCount + wrongCount)) * 100;
+    // Calculate percentage and set the comment based on the rules.
 
-    if (getMark >= 85) {
+    const totalQuestions = rightCount + wrongCount;
+    const percentage =
+      totalQuestions > 0 ? (rightCount / totalQuestions) * 100 : 0;
+
+    if (percentage >= 85) {
       comment = "Excellent";
-    } else if (getMark >= 70 && getMark <= 84) {
+    } else if (percentage >= 70) {
       comment = "Good Shape";
-    } else if (getMark >= 60 && getMark <= 69) {
+    } else if (percentage >= 60) {
       comment = "Need More Efforts";
-    } else if (getMark >= 40 && getMark <= 59) {
+    } else if (percentage >= 40) {
       comment = "Try again & Practice more";
     } else {
       comment = "Keep pushing & Try ...";
     }
 
+    // Update the Paper document with the calculated results.
+
     const updatedPaper = await Paper.findOneAndUpdate(
-      { examineeId },
+      { examineeId: user._id, packageUid: examTrack },
       {
         $set: {
-          mark: getMark,
+          mark: rightMarks - wrongMarks,
           rightans: rightCount,
           wrongans: wrongCount,
           show: true,
           rightmark: rightMarks,
           wrongmark: wrongMarks,
-          percentage: isNaN(percentage) ? 0 : parseFloat(percentage),
+          percentage: percentage,
           coment: comment,
         },
       },
       { new: true }
     );
-
-    console.log("Hello", updatedPaper);
 
     res.status(200).json(updatedPaper);
   } catch (error) {
@@ -243,20 +347,16 @@ const resultPulish = async (req, res) => {
   }
 };
 
-// const resultPulish = async (req, res) => {
-//   const { examTrack, examineeId } = req.body;
-//   console.log(examTrack, examineeId);
-//   calculateMarks(examTrack, examineeId, res);
-// };
-
 const getPaper = async (req, res) => {
   const { puid, id, optn } = req.body;
+  console.log(puid, id, optn);
 
   try {
     const search = await Paper.findOne({
       packageUid: puid,
       examineeId: id,
     });
+    console.log(search);
     if (search) {
       for (const question in optn) {
         const answer = await optn[question];
@@ -315,13 +415,12 @@ const successStd = async (req, res) => {
       res.status(200).json({ total: `${mx.length}+` });
     } else {
       console.log(mx.length);
-      res.status(200).json({ total: "10+" });
+      res.status(200).json({ total: "0" });
     }
   } catch (error) {
     res.status(500).json({ error: error.code });
   }
 };
-
 
 // const viewResult =async(req,res)=>{
 //   const {cat ,email}=req.body

@@ -97,7 +97,7 @@ const StudentProfile = () => {
   return (
     <>
       <div className="grid relative grid-cols-1 md:grid-cols-3 gap-5 justify-items-center items-center mt-16 bg-secondary p-10 w-4/5 mx-auto ">
-        {}
+
         <div onClick={handleShow}>
           <img
             className=" rounded-full shadow-2xl w-[170px] h-[170px]"
@@ -145,8 +145,9 @@ const StudentProfile = () => {
       </div>
 
       {/* students tabs  */}
-
-      <StudentTabs />
+      {userDa?.userData?.userInfo?.role === "Student" &&
+        <StudentTabs />
+      }
     </>
   );
 };

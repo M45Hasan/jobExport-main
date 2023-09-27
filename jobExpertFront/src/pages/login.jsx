@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
-import logo from "../assets/brandLogo/logo.png";
+import logo from "../assets/brandLogo/logos.png";
 import google from "../assets/brandLogo/google.png";
 import facebook from "../assets/brandLogo/facebook.png";
 import appstore from "../assets/brandLogo/appstore (1).png";

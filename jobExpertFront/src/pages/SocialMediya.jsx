@@ -19,14 +19,17 @@ const SocialMediya = () => {
           <p className="text-base">25k Post Today Uploaded</p>
         </div>
         <div className="text-center sm:text-right mt-4 sm:mt-0">
-          <a href={`http://localhost:5000/pdfs/`} target="_blank">
+          <a
+            href={`https://www.facebook.com/groups/268866926013978`}
+            target="_blank"
+          >
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
               Join Now
             </button>
           </a>
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row rounded-lg mt-3 p-6 justify-around items-center bg-[#EAE9E9]">
+      {/* <div className="flex flex-col sm:flex-row rounded-lg mt-3 p-6 justify-around items-center bg-[#EAE9E9]">
         <div className="mb-4 sm:mb-0">
           <img
             className="w-16 h-16 sm:w-24 sm:h-24 rounded-full mx-auto sm:mx-0"
@@ -47,7 +50,7 @@ const SocialMediya = () => {
             </button>
           </a>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

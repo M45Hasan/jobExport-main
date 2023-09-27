@@ -1,4 +1,4 @@
-import logo from "../../assets/brandLogo/logo.png";
+import logo from "../../assets/brandLogo/logos.png";
 
 import appstore from "../../assets/brandLogo/appstore (1).png";
 import googlestore from "../../assets/brandLogo/appstore (2).png";
@@ -7,7 +7,7 @@ const JobExpart = () => {
   return (
     <>
       <section>
-        <img src={logo} alt="" className="mx-auto mt-16" />
+        <img src={logo} alt="" className="mx-auto w-[50%] md:w-[25%] mt-12" />
         <h1 className="text-xl md:text-2xl text-center mt-10 mb-10 font-semibold">
           ডাউনলোড করুন আমাদের মোবাইল অ্যাপ
         </h1>

@@ -7,6 +7,7 @@ const userSchema = new Schema({
     type: String,
     require: true,
   },
+  teacher: { type: Boolean, default: false },
   email: {
     type: String,
     require: true,
@@ -76,6 +77,12 @@ const userSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "QuizHead",
+    },
+  ],
+  bank: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Question",
     },
   ],
   orderId: { type: String },

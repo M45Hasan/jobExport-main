@@ -28,7 +28,7 @@ const regiController = async (req, res) => {
 
 const verifyEmailController = async (req, res) => {
   const { email, otpmatch } = req.body;
-
+  console.log(email, otpmatch);
   try {
     const search = await User.find({
       email: email,
@@ -73,6 +73,44 @@ const allUser = async (req, res) => {
     res.status(500).json({ error: "Error Occurs" });
   }
 };
+const myInfo = async (req, res) => {
+  const { id } = req.body;
+  console.log("myId:", id);
+  try {
+    const search = await User.findById({ _id: id });
+    res.status(undefined || 200).send(search);
+  } catch (error) {
+    console.log(error.code);
+    res.status(500).json({ error: "Error Occurs" });
+  }
+};
+const approveTech = async (req, res) => {
+  const { id } = req.body;
+  console.log("myId:", id);
+  try {
+    const search = await User.findByIdAndUpdate(
+      { _id: id },
+      { $set: { teacher: true } },
+      { new: true }
+    );
+    res.status(undefined || 200).send(search);
+  } catch (error) {
+    console.log(error.code);
+    res.status(500).json({ error: "Error Occurs" });
+  }
+};
+const delTech = async (req, res) => {
+  const { id } = req.body;
+  console.log("myId:", id);
+  try {
+    const search = await User.findByIdAndDelete({ _id: id });
+    res.status(undefined || 200).send(search);
+  } catch (error) {
+    console.log(error.code);
+    res.status(500).json({ error: "Error Occurs" });
+  }
+};
+
 const imgO = async (req, res) => {
   const { id } = req.body;
   console.log(id);
@@ -90,4 +128,7 @@ module.exports = {
   userDelete,
   allUser,
   imgO,
+  myInfo,
+  approveTech,
+  delTech,
 };

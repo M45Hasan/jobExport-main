@@ -1,6 +1,7 @@
 const express = require("express");
 const _ = express.Router();
 const path = require("path");
+const Job = require("../../model/jobModal");
 const app = express();
 
 const {
@@ -9,6 +10,9 @@ const {
   userDelete,
   allUser,
   imgO,
+  myInfo,
+  approveTech,
+  delTech
 } = require("../../controller/regsitrationController");
 const {
   logController,
@@ -29,7 +33,7 @@ const {
   categoryWiseTodayExam,
   selectExamByUser,
   waitingResult,
-  publishBoolean
+  publishBoolean,
 } = require("../../controller/examPackageController");
 
 // const { examCreate, deleteExam } = require("../../controller/examController");
@@ -38,6 +42,10 @@ const {
   deleteQuestion,
   packageQuestionList,
   whoCanExam,
+  checkF,
+  banking,
+  getBank,
+  deltBank,
 } = require("../../controller/questionController");
 
 const {
@@ -56,6 +64,43 @@ const { deletePdf, getPdfs } = require("../../controller/pdfDelete");
 _.post("/upload-pdf", getPdf);
 _.get("/upload-pdf", getPdfs);
 _.delete("/upload-pdf/:filename", deletePdf);
+
+// job circular ********************************************** start*********
+const postJob = require("../../controller/jobController");
+const getJob = require("../../controller/jobController");
+_.post("/submitJobCircular", postJob);
+_.get("/submitJobCircular", async (req, res) => {
+  try {
+    const jobCirculars = await Job.find();
+
+    res.status(200).json(jobCirculars);
+  } catch (error) {
+    console.error("Error fetching job circulars:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching job circulars" });
+  }
+});
+_.delete("/submitJobCircular/:id", async (req, res) => {
+  const jobId = req.params.id;
+  console.log(jobId);
+
+  try {
+    const deletedJobCircular = await Job.findByIdAndDelete({ _id: jobId });
+
+    if (!deletedJobCircular) {
+      return res.status(404).json({ error: "Job circular not found" });
+    }
+
+    res.status(200).json({ message: "Job circular deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting job circular:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while deleting the job circular" });
+  }
+});
+// job circular ********************************************** end *********
 
 const {
   createVideo,
@@ -96,6 +141,9 @@ _.post("/deleteuser", userDelete);
 _.post("/deleteuser", userDelete);
 _.get("/alluser", allUser);
 _.post("/user-img", imgO);
+_.post("/my-info", myInfo);
+_.post("/approve-tech", approveTech);
+_.post("/del-tech", delTech);
 
 //password api
 _.post("/login", logController);
@@ -128,6 +176,10 @@ _.post("/questioncreate", createQuestion);
 _.post("/deletequestion", deleteQuestion);
 _.post("/examquestion", packageQuestionList);
 _.post("/whocanexam", whoCanExam);
+_.post("/check", checkF);
+_.post("/bank", banking);
+_.post("/get-bank", getBank);
+_.post("/del-bank", deltBank);
 
 // paymentgateway
 

@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import Api from "../Axios/axios";
 import axios from "axios";
-import  apy  from "../../components/urlBackend"
+import apy from "../../components/urlBackend"
 
 const homeSectionThree = () => {
   const [data, setData] = useState([]);
@@ -32,10 +32,10 @@ const homeSectionThree = () => {
               <div className="w-full h-full py-5">
                 <img
                   className="w-[150px] h-[150px] border-4 border-white rounded-full mx-auto"
-                  src={`${apy}/jobExport/uploads/${story?.url}`}
+                  src={`${apy}/uploads/${story?.url}`}
                   alt="Sunset in the mountains"
                 />
-                {`${apy}/jobExpert/uploads/${story?.url}`}
+              
               </div>
               <div className="px-6 py-4 text-center text-white bg-[#26A4DE] rounded-t-[50px]">
                 <h5 className="text-lg font-bold tracking-widest mb-2 uppercase">

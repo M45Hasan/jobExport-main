@@ -1,13 +1,14 @@
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { Icon } from "@iconify/react";
-import PackageUpdate from "./PackageUpdate";
+import PackageUpdate from "./Bank";
 import Routine from "./Routine";
 import Result from "./Result";
 import ExamUpdate from "./ExamUpdate";
 import Favourite from "./Favourite";
 import Stroy from "./Stroy";
 import Comment from "./Comment";
+import Bank  from "./Bank";
 
 const StudentTabs = () => {
   return (
@@ -15,8 +16,6 @@ const StudentTabs = () => {
       <Tabs>
         {/* tab list */}
         <TabList>
-        
-          
           <Tab>
             <h3 className="flex justify-center items-center gap-2 py-2 px-12">
               {" "}
@@ -35,7 +34,7 @@ const StudentTabs = () => {
             <h3 className="flex justify-center items-center gap-2 py-2 px-11">
               {" "}
               <Icon icon="jam:refresh" width={20} />
-              <span>ফেভারিট</span>
+              <span>উত্তর পত্র</span>
             </h3>
           </Tab>
           <Tab>
@@ -52,6 +51,13 @@ const StudentTabs = () => {
               <span>Write Comment</span>
             </h3>
           </Tab>
+          <Tab>
+            <h3 className="flex justify-center items-center gap-2 py-2 px-11">
+              {" "}
+              <Icon icon="jam:refresh" width={20} />
+              <span>প্রশ্ন ব্যাংক</span>
+            </h3>
+          </Tab>
         </TabList>
 
         {/* tab list items  */}
@@ -59,7 +65,6 @@ const StudentTabs = () => {
         {/* package update */}
 
         {/* routine update */}
-        
 
         {/* Result update */}
         <TabPanel>
@@ -75,13 +80,16 @@ const StudentTabs = () => {
         <TabPanel>
           <Favourite />
         </TabPanel>
-         {/* Write Stroy  */}
-         <TabPanel>
-         <Stroy/>
+        {/* Write Stroy  */}
+        <TabPanel>
+          <Stroy />
         </TabPanel>
-         {/* Write Comment  */}
-         <TabPanel>
-        <Comment/>
+        {/* Write Comment  */}
+        <TabPanel>
+          <Comment />
+        </TabPanel>
+        <TabPanel>
+          <Bank />
         </TabPanel>
       </Tabs>
     </div>

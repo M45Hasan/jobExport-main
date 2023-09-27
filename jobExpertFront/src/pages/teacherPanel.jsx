@@ -125,6 +125,7 @@ export default function TeacherPanel() {
     setInfo({
       ...info,
       examCategory: catData,
+
       premium: premiumChecked,
       [name]: value,
     });
@@ -133,7 +134,9 @@ export default function TeacherPanel() {
   };
   console.log(info);
   let [show, setShow] = React.useState(false);
-
+  // let revurseData = () =>{
+  //     seInfo(data: )
+  // }
   const handelSubmit = async () => {
     setError({
       packageName: !info.packageName ? "Please Input Package Name" : "",
@@ -233,6 +236,8 @@ export default function TeacherPanel() {
           <Question
             examSerials={info.examSerial}
             NID={datas.userData.userInfo.nid}
+            examCategory={info.examCategory}
+
           />
         ) : (
           <div>
@@ -307,13 +312,20 @@ export default function TeacherPanel() {
                   <p className="text-[red] text-lg">{error.examDate}</p>
                 )}
                 <p className="text-[red]">Formate will Be: 2023-09-06</p>
-                <TextField
+                {/* <TextField
                   onChange={handetype}
                   name="examDate"
                   label="Exam Date"
                   placeholder="YYY-MM-DD"
                   fullWidth
-                />
+                /> */}
+                <input
+                  placeholder="YYY-MM-DD"
+                  name="examDate"
+                  onChange={handetype}
+                  className="border p-2"
+                  type="date"
+                ></input>
                 {error.examTime && (
                   <p className="text-[red] text-lg">{error.examTime}</p>
                 )}
