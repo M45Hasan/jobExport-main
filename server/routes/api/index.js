@@ -10,6 +10,9 @@ const {
   userDelete,
   allUser,
   imgO,
+  myInfo,
+  approveTech,
+  delTech
 } = require("../../controller/regsitrationController");
 const {
   logController,
@@ -138,6 +141,9 @@ _.post("/deleteuser", userDelete);
 _.post("/deleteuser", userDelete);
 _.get("/alluser", allUser);
 _.post("/user-img", imgO);
+_.post("/my-info", myInfo);
+_.post("/approve-tech", approveTech);
+_.post("/del-tech", delTech);
 
 //password api
 _.post("/login", logController);
