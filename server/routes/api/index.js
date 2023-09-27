@@ -1,7 +1,7 @@
 const express = require("express");
 const _ = express.Router();
 const path = require("path");
-const Job = require("../../model/jobModal")
+const Job = require("../../model/jobModal");
 const app = express();
 
 const {
@@ -39,6 +39,10 @@ const {
   deleteQuestion,
   packageQuestionList,
   whoCanExam,
+  checkF,
+  banking,
+  getBank,
+  deltBank,
 } = require("../../controller/questionController");
 
 const {
@@ -58,7 +62,6 @@ _.post("/upload-pdf", getPdf);
 _.get("/upload-pdf", getPdfs);
 _.delete("/upload-pdf/:filename", deletePdf);
 
-
 // job circular ********************************************** start*********
 const postJob = require("../../controller/jobController");
 const getJob = require("../../controller/jobController");
@@ -75,22 +78,23 @@ _.get("/submitJobCircular", async (req, res) => {
       .json({ error: "An error occurred while fetching job circulars" });
   }
 });
-_.delete('/submitJobCircular/:id', async (req, res) => {
+_.delete("/submitJobCircular/:id", async (req, res) => {
   const jobId = req.params.id;
-  console.log(jobId)
+  console.log(jobId);
 
   try {
-    
-    const deletedJobCircular = await Job.findByIdAndDelete({_id:jobId});
+    const deletedJobCircular = await Job.findByIdAndDelete({ _id: jobId });
 
     if (!deletedJobCircular) {
-      return res.status(404).json({ error: 'Job circular not found' });
+      return res.status(404).json({ error: "Job circular not found" });
     }
 
-    res.status(200).json({ message: 'Job circular deleted successfully' });
+    res.status(200).json({ message: "Job circular deleted successfully" });
   } catch (error) {
-    console.error('Error deleting job circular:', error);
-    res.status(500).json({ error: 'An error occurred while deleting the job circular' });
+    console.error("Error deleting job circular:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while deleting the job circular" });
   }
 });
 // job circular ********************************************** end *********
@@ -166,6 +170,10 @@ _.post("/questioncreate", createQuestion);
 _.post("/deletequestion", deleteQuestion);
 _.post("/examquestion", packageQuestionList);
 _.post("/whocanexam", whoCanExam);
+_.post("/check", checkF);
+_.post("/bank", banking);
+_.post("/get-bank", getBank);
+_.post("/del-bank", deltBank);
 
 // paymentgateway
 

@@ -78,6 +78,12 @@ const userSchema = new Schema({
       ref: "QuizHead",
     },
   ],
+  bank: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Question",
+    },
+  ],
   orderId: { type: String },
   orderPk: { type: String },
 });

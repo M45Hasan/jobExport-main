@@ -357,7 +357,7 @@ function Navbar() {
                       src={
                         userData?.userData?.userInfo?.avatar?.length == 0
                           ? ""
-                          : `${apy}/uploads/${userData?.userData?.userInfo?.userImg[imgx]} `
+                          : `${apy}/uploads/${userData?.userData?.userInfo?.userImg[ imgx]} `
                       }
                     />
                   </IconButton>

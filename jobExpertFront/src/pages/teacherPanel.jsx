@@ -236,6 +236,8 @@ export default function TeacherPanel() {
           <Question
             examSerials={info.examSerial}
             NID={datas.userData.userInfo.nid}
+            examCategory={info.examCategory}
+
           />
         ) : (
           <div>

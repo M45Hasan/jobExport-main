@@ -4,6 +4,7 @@ const Exam = require("../model/examModel");
 const ExamPackage = require("../model/examPackage");
 const Question = require("../model/questionModel");
 const User = require("../model/userModel");
+const Answer = require("../model/ansModel");
 
 // const createQuestion = async (req, res) => {
 //   const {
@@ -74,6 +75,7 @@ const createQuestion = async (req, res) => {
     wrongMark,
     examSerial,
     nid,
+    examCategory,
   } = req.body;
 
   try {
@@ -100,6 +102,7 @@ const createQuestion = async (req, res) => {
         rightMark,
         wrongMark,
         serial,
+        examCategory: search[0].examCategory,
       });
 
       newQuestion.save();
@@ -191,10 +194,84 @@ const whoCanExam = async (req, res) => {
     res.status(500).json({ error: "Server error", code: error.code });
   }
 };
+const checkF = async (req, res) => {
+  const { exampaperid, examineeId } = req.body;
+  console.log(exampaperid, examineeId);
+
+  try {
+    const myQ = await Answer.find({ exampaperid: "185239", examineeId });
+    console.log(myQ);
+    if (myQ.length > 0) {
+      res.status(200).send(myQ);
+    } else {
+      res.status(400).json({ error: "User Not found" });
+    }
+  } catch (er) {
+    res.status(500).json({ error: er.message });
+  }
+};
+
+const banking = async (req, res) => {
+  const { inf, id } = req.body;
+  console.log(inf, id);
+  try {
+    const mou = await User.findByIdAndUpdate(
+      { _id: id },
+      { $push: { bank: inf } },
+      { new: true }
+    );
+    res.status(200).send(mou);
+  } catch (er) {
+    res.status(500).json({ error: er.message });
+  }
+};
+
+const getBank = async (req, res) => {
+  const { id } = req.body;
+  console.log("Received ID:", id);
+  try {
+    const user = await User.findById(id).populate("bank");
+
+    if (user) {
+      console.log("Found User:", user);
+      res.status(200).json(user.bank);
+    } else {
+      console.log("User Not Found");
+      res.status(400).json({ error: "User Not Found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+const deltBank = async (req, res) => {
+  const { inf, id } = req.body;
+  console.log(inf, id);
+  try {
+    const mu = await User.findByIdAndUpdate(
+      id,
+      { $pull: { bank: inf } },
+      { new: true }
+    );
+
+    if (mu) {
+      res.status(200).send(mu);
+    } else {
+      res.status(400).json({ error: "User Not Found" });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 
 module.exports = {
   createQuestion,
   deleteQuestion,
   packageQuestionList,
   whoCanExam,
+  checkF,
+  banking,
+  getBank,
+  deltBank,
 };
