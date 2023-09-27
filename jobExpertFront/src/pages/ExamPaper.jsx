@@ -514,8 +514,10 @@ const ExamPaper = () => {
   const { id } = useParams();
   const seletor = useSelector((state) => state);
   const [data, setData] = useState({});
+
   let [show, setShow] = useState(false);
   const [qShow, setQShow] = useState(true)
+
   const [selectedOptions, setSelectedOptions] = useState({});
 
   useEffect(() => {
@@ -682,6 +684,7 @@ const ExamPaper = () => {
                   </div>
                 )}
               </div>
+
 
               {qShow &&
 
@@ -974,6 +977,7 @@ const ExamPaper = () => {
                                         {item.optionD}
                                       </label>
                                     </div>
+
                                   </div>
                                 </div>
                               </div>
