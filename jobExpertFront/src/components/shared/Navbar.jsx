@@ -79,9 +79,95 @@ function Navbar() {
   };
 
   const [noti, setNoti] = useState([]);
+  const [user, setUser] = useState([]);
+  const [userAll, setUserAll] = useState([]);
   const [notification, setNotification] = useState(false);
   const [prevNotiLength, setPrevNotiLength] = useState(0);
+  let id = userData?.userData?.userInfo?.id
 
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const response = await axios.post("/jobExpert/api/v1/my-info", { id });
+        const newNotifications = response.data;
+
+        if (newNotifications) {
+          setUser(newNotifications)
+        } else {
+          setUser(null);
+        }
+
+
+      } catch (error) {
+        console.log(error.code);
+      }
+    };
+
+    fetchNotifications();
+  }, []);
+
+
+
+  // teacher approve panel 
+  const [tech, setTech] = useState([]);
+  const fetchNotifications = async () => {
+    try {
+      const response = await axios.get("/jobExpert/api/v1/allUser");
+      const newNotifications = response.data;
+      setUserAll(newNotifications);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
+
+  const helloTeacher = () => {
+    if (userAll) {
+      const teacherArray = userAll.filter(
+        (item) => item.role === "Teacher" && item.teacher === false
+      );
+      setTech(teacherArray);
+    }
+  };
+
+  const handleTec = async (info) => {
+    console.log("approveId:", info._id);
+    try {
+      if (info._id) {
+        await axios.post("/jobExpert/api/v1/approve-tech", { id: info._id });
+        helloTeacher();
+      } else {
+        console.error("Error: Missing info._id");
+      }
+    } catch (err) {
+      console.error("Error handling tech approval:", err.message);
+    }
+  };
+  //del 
+  const delTec = async (info) => {
+    console.log("approveId:", info._id);
+    try {
+      if (info._id) {
+        await axios.post("/jobExpert/api/v1/del-tech", { id: info._id });
+        helloTeacher();
+      } else {
+        console.error("Error: Missing info._id");
+      }
+    } catch (err) {
+      console.error("Error handling tech approval:", err.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
+  useEffect(() => {
+    helloTeacher();
+  }, [userAll]);
+
+  console.log(tech);
+
+  // teacher approve panel end 
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
@@ -162,6 +248,7 @@ function Navbar() {
                 display: { xs: "block", md: "none" },
               }}
             >
+
               {show ? (
                 <>
                   <Link to={"/"}>
@@ -265,7 +352,7 @@ function Navbar() {
           >
             {show ? (
               <Box sx={{ flexGrow: 2 }}>
-                {userData?.userData?.userInfo?.role == "Teacher" ? (
+                {(userData?.userData?.userInfo?.role == "Teacher" && user.teacher === true) ? (
                   <Link to={"/jobexpart/teacherPanel"}>
                     <Button sx={{ marginRight: "20px" }} variant="contained">
                       Teacher Panel
@@ -275,9 +362,9 @@ function Navbar() {
                   ""
                 )}
 
-                {rmail === "aminr1384@gmail.com" ||
-                rmail === "eftehstu999@gmail.com" ||
-                rmail === "mmhasan045@gmail.com" ? (
+                {rmail === "aminr1384@gmail.com" || rmail === "eftehstu999@gmail.com" || rmail === "mmhasan045@gmail.com" ? (
+
+
                   <Link to={"/jobexpart/admin"}>
                     <Button sx={{ marginRight: "20px" }} variant="contained">
                       Admin Panel
@@ -296,11 +383,19 @@ function Navbar() {
                       />
                       <div className="absolute -top-2 -left-2">
                         <div className="relative flex h-4 w-4">
+
+
+
+
+
                           {notification ? (
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#EE8419] opacity-75"></span>
                           ) : (
-                            <></>
+                            null
                           )}
+
+
+
                           <span className="relative inline-flex rounded-full h-4 w-4 bg-[#EE8419]"></span>
                         </div>
                         {hideen && (
@@ -309,33 +404,65 @@ function Navbar() {
                             className=" absolute rounded-md border top-[380%] z-50 left-[-158px] w-[200px] text-white bg-white p-2 "
                           >
                             <div className="flex items-center text-center text-xs justify-center gap-x-4">
-                              <ul>
-                                {noti
-                                  .reverse()
-                                  .slice(0, 3)
-                                  .map((item, i) => (
+                              {tech.length > 0 && (rmail === "aminr1384@gmail.com" || rmail === "eftehstu999@gmail.com" || rmail === "mmhasan045@gmail.com") ?
+                                <ul >
+
+                                  {tech?.map((tec, ii) => (
                                     <div
-                                      key={i}
-                                      className="p-2 rounded-md border border-[#ee1919] font-semibold text-[#000000] mt-1"
+                                      key={ii}
+
+                                      className="p-2 rounded-md border border-[#ee1919] font-semibold text-sm text-gray-900 my-2"
                                     >
-                                      <p className="text-center font-bold text-[14px] text-[#000000]">
-                                        New Exam{" "}
+                                      <p className="text-center text-orange-700 animate-ping ease-in duration-75   font-bold text-[14px]">
+                                        New Teacher{" "}
                                       </p>
                                       <p className="text-center">
-                                        Teacher: {item.teacher}
+                                        Teacher: {tec.name}
                                       </p>
                                       <p className="text-center">
-                                        category: {item.category}
+                                        Email: {tec.email}
                                       </p>
-                                      <p className="text-center">
-                                        Subject: {item.packageName}
+                                      <p onClick={() => handleTec(tec)} className="text-center bg-primary rounded-md shadow-md font-bold mt-1 text-base text-red-600">
+                                        Click to Approve
                                       </p>
-                                      <p className="text-center">
-                                        Price: {item.price} Taka
+                                      <p onClick={() => delTec(tec)} className="text-center bg-primary rounded-md shadow-md font-bold mt-2 text-base text-red-600">
+                                        Click to Delete
                                       </p>
+
                                     </div>
+
                                   ))}
-                              </ul>
+
+                                </ul> :
+                                <ul>
+                                  {noti
+                                    .reverse()
+                                    .slice(0, 5)
+                                    .map((item, i) => (
+                                      <div
+                                        key={i}
+                                        className="p-2 rounded-md border border-[#ee1919] font-semibold text-[#000000] mt-1"
+                                      >
+                                        <p className="text-center font-bold text-[14px] text-[#000000]">
+                                          New Exam{" "}
+                                        </p>
+                                        <p className="text-center">
+                                          Teacher: {item.teacher}
+                                        </p>
+                                        <p className="text-center">
+                                          category: {item.category}
+                                        </p>
+                                        <p className="text-center">
+                                          Subject: {item.packageName}
+                                        </p>
+                                        <p className="text-center">
+                                          Price: {item.price} Taka
+                                        </p>
+                                      </div>
+                                    ))}
+                                </ul>
+                              }
+
                             </div>
                           </div>
                         )}

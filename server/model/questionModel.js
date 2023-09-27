@@ -17,6 +17,7 @@ const newQuestion = new Schema({
   ansDetail: { type: String },
   rightMark: { type: Number },
   wrongMark: { type: Number },
+  examCategory: { type: String },
 
   serial: { type: Number, require: true },
 });

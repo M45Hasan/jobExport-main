@@ -49,3 +49,50 @@ li {
 }
 
 /* Style for radio options (customize as needed) */
+/* Define a circular button style */
+.circle-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 36px;
+  border-radius: 20%; /* Makes it circular */
+  background-color: #26A4DE; /* Change to your desired background color */
+  color: white; /* Text color */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.circle-button-bank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 36px;
+  border-radius: 20%; /* Makes it circular */
+  background-color: #26A4DE; /* Change to your desired background color */
+  color: white; /* Text color */
+  font-size: 16px;
+
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+ 
+/* Add a hover effect */
+.circle-button:hover {
+  background-color: #963505; /* Change to your desired hover background color */
+  transform: scale(1.1); /* Adds a slight scaling effect on hover */
+}
+
+.circle-option{
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.circle-option:hover{
+  background-color: #059669; /* Change to your desired hover background color */
+  transform: scale(1.1);
+}

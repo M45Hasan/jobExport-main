@@ -21,7 +21,9 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9),
 ];
 
-const Question = ({ examSerials, NID }) => {
+const Question = ({ examSerials, NID, examCategory }) => {
+
+  console.log(examSerials, NID, examCategory)
   let [info, setInfo] = useState({
     optionA: "",
     optionB: "",
@@ -100,6 +102,7 @@ const Question = ({ examSerials, NID }) => {
         rightMark: info.rightMark,
         wrongMark: info.wrongMark,
         examSerial: examSerials,
+        examCategory:examCategory,
         nid: NID,
         whatIsTheQuestion: descriptionHtml,
       };

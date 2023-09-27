@@ -17,6 +17,7 @@ const homeSectionTwo = () => {
       <h3 className="text-2xl text-center font-bold mb-10 mt-7">
         Job Expert -এ পাচ্ছেন !
       </h3>
+
       <section className=" container px-4  mx-auto gap-x-4 mt-8">
         <Grid container spacing={2}>
           <Grid item xs={6} md={2}>
@@ -125,6 +126,7 @@ const homeSectionTwo = () => {
             </Item>
           </Grid>
         </Grid>
+
       </section>
     </>
   );

@@ -10,8 +10,12 @@ const ExamPaper = () => {
   const { id } = useParams();
   const seletor = useSelector((state) => state);
   const [data, setData] = useState({});
+
   let [show, setShow] = useState(false);
-  const [qShow, setQShow] = useState(true);
+
+  const [qShow, setQShow] = useState(true)
+
+
   const [selectedOptions, setSelectedOptions] = useState({});
 
   useEffect(() => {
@@ -178,7 +182,9 @@ const ExamPaper = () => {
                 )}
               </div>
 
+
               {qShow && (
+
                 <div className="  text-left flex justify-between md:flex-row flex-col clearfix">
                   <div className="left-side md:w-[50%]">
                     <ul>
@@ -488,6 +494,7 @@ const ExamPaper = () => {
                                       </label>
                                       <p>{item.optionD}</p>
                                     </div>
+
                                   </div>
                                 </div>
                               </div>
