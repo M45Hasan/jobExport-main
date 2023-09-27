@@ -64,7 +64,7 @@ const leading = () => {
                   className="w-20 mx-auto"
                 />
 
-                <h3 className="text-center text-lg font-bold py-2">
+                <h3 className="text-center md:text-lg text-sm font-bold py-2">
                   "Live Expert"
                 </h3>
                 <p className="text-center px-2"></p>
@@ -83,7 +83,7 @@ const leading = () => {
                   className="w-20 mx-auto"
                 />
 
-                <h3 className="text-center text-lg font-bold py-2">
+                <h3 className="text-center md:text-lg text-sm font-bold py-2">
                   "Exam Zone"
                 </h3>
                 <p className="text-center px-2"></p>
@@ -102,7 +102,7 @@ const leading = () => {
                   className="w-20 mx-auto"
                 />
 
-                <h3 className="text-center text-lg font-bold py-2">
+                <h3 className="text-center md:text-lg text-sm font-bold py-2">
                   "Video Support"
                 </h3>
                 <p className="text-center px-2"></p>
@@ -122,7 +122,7 @@ const leading = () => {
                   className="w-20 mx-auto"
                 />
 
-                <h3 className="text-center text-lg font-bold py-2">
+                <h3 className="text-center md:text-lg text-sm font-bold py-2">
                   "Premium Member"
                 </h3>
                 <p className="text-center px-2"></p>
@@ -141,7 +141,7 @@ const leading = () => {
                   className="w-20 mx-auto"
                 />
 
-                <h3 className="text-center text-lg font-bold py-2">
+                <h3 className="text-center md:text-lg text-sm font-bold py-2">
                   "Pdf Support"
                 </h3>
                 <p className="text-center px-2"></p>
@@ -160,7 +160,7 @@ const leading = () => {
                   className="w-20 mx-auto"
                 />
 
-                <h3 className="text-center text-lg font-bold py-2">
+                <h3 className="text-center md:text-lg text-sm font-bold py-2">
                   Communities
                 </h3>
                 <p className="text-center px-2"></p>

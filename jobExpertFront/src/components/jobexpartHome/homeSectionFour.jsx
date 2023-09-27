@@ -94,10 +94,10 @@ const homeSectionFour = () => {
                   alt=""
                   className="w-20 mx-auto"
                 />
-                <h3 className="text-center text-lg font-bold py-2">
+                <h3 className="text-center md:text-lg text-sm font-bold py-2">
                   মোট সাব্জেক্ট
                 </h3>
-                <span className="flex justify-center font-bold text-lg">
+                <span className="flex justify-center font-bold md:text-lg text-sm">
                   <CountUp end={packageList.length} duration={5} />+
                 </span>
               </div>
@@ -111,10 +111,10 @@ const homeSectionFour = () => {
                   alt=""
                   className="w-20 mx-auto"
                 />
-                <h3 className="text-center text-lg font-bold py-2">
+                <h3 className="text-center md:text-lg text-sm font-bold py-2">
                   শিক্ষার্থী
                 </h3>
-                <span className="flex justify-center font-bold text-lg">
+                <span className="flex justify-center font-bold md:text-lg text-sm">
                   <CountUp end={studentCount} duration={5} />+
                 </span>
               </div>
@@ -129,10 +129,10 @@ const homeSectionFour = () => {
                   alt=""
                   className="w-20 mx-auto"
                 />
-                <h3 className="text-center text-lg font-bold py-2">
+                <h3 className="text-center md:text-lg text-sm font-bold py-2">
                   সফল শিক্ষার্থী
                 </h3>
-                <span className="flex justify-center font-bold text-lg">
+                <span className="flex justify-center font-bold md:text-lg text-sm">
                   {su.total}
                 </span>
               </div>
@@ -147,8 +147,10 @@ const homeSectionFour = () => {
                   alt=""
                   className="w-20 mx-auto"
                 />
-                <h3 className="text-center text-lg font-bold py-2">মেন্টর</h3>
-                <span className="flex justify-center font-bold text-lg">
+                <h3 className="text-center md:text-lg text-sm font-bold py-2">
+                  মেন্টর
+                </h3>
+                <span className="flex justify-center font-bold md:text-lg text-sm">
                   <CountUp end={teacherCount} duration={5} />+
                 </span>
               </div>
@@ -163,10 +165,10 @@ const homeSectionFour = () => {
                   alt=""
                   className="w-20 mx-auto"
                 />
-                <h3 className="text-center text-lg font-bold py-2">
+                <h3 className="text-center md:text-lg text-sm font-bold py-2">
                   সাফলতার বছর
                 </h3>
-                <span className="flex justify-center font-bold text-lg">
+                <span className="flex justify-center font-bold md:text-lg text-sm">
                   <CountUp end={yearCount} duration={5} />+
                 </span>
               </div>
