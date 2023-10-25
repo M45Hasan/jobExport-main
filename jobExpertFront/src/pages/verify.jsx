@@ -10,6 +10,7 @@ import axios from "../components/Axios/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { activeUser } from "../userSlice/userSlice";
+import TextField from "@mui/material/TextField";
 
 const verify = () => {
   let navigate = useNavigate();
@@ -19,21 +20,48 @@ const verify = () => {
   console.log(user.userData.userInfo);
 
   const [otp, setOtp] = useState(["", "", "", ""]); // Array to hold individual digits
+  const [em, setEm] = useState({
+    email: "",
+    otp: ""
+  });
+  const [errors, setErrors] = useState({
+
+    email: "",
+    otp: "",
+
+  });
 
   const handleChange = (e, index) => {
-    const { value } = e.target;
+    const { value, name } = e.target;
     const newOtp = [...otp];
+    setEm({ ...em, [name]: value })
+    setErrors({ ...errors, [name]: value ? "" : `${name} is required` });
     newOtp[index] = value;
     setOtp(newOtp);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const enteredOtp = otp.join("");
+
+    if (em.email === "" || em.otp === "") {
+      setErrors({ ...errors, email: "Email and valid Opt must be uses" });
+      setVerificationStatus("error");
+      return
+
+    }
+    if (em.otp.split("").length !== 4) {
+      setErrors({ ...errors, otp: "Valid OTP Require" });
+      setVerificationStatus("error");
+      return
+    }
+
     let userverify = {
-      email: user.userData.userInfo.email,
-      otpmatch: enteredOtp,
+      email: em.email,
+      otpmatch: em.otp,
     };
+
+    console.log(userverify)
+
 
     try {
       // Assuming your API returns a response indicating success or failure
@@ -50,8 +78,8 @@ const verify = () => {
             hasEmailVerified: true,
             otpmatch: "",
           };
-          console.log("updatedUserData", updatedUserData);
-          dispathc(activeUser(updatedUserData));
+          // console.log("updatedUserData", updatedUserData);
+          // dispathc(activeUser(updatedUserData));
           navigate("/login");
         }, 2000);
       } else {
@@ -83,7 +111,22 @@ const verify = () => {
       </div>
 
       <form className="text-center" onSubmit={handleSubmit}>
-        <div className="flex items-center justify-center ml-4">
+        <div className=" items-center  ml-4  flex justify-center mb-2">
+          <div className="w-[340px]">
+            <TextField
+              margin="normal"
+              className="w-[200px] md:w-20 h-12 text-center text-xl border rounded-md mx-1 focus:outline-none"
+              fullWidth
+              id="email"
+              label="ই-মেইল লিখুন"
+              name="email"
+              autoComplete="email"
+              onChange={(e) => handleChange(e)}
+              autoFocus
+            />
+          </div>
+        </div>
+        {/* <div className="flex items-center justify-center ml-4">
           {otp.map((digit, index) => (
             <input
               key={index}
@@ -97,6 +140,24 @@ const verify = () => {
               onChange={(e) => handleChange(e, index)}
             />
           ))}
+        </div> */}
+        {/** new  */}
+
+        <div className=" items-center  ml-4  flex justify-center mb-2">
+          <div className="w-[340px]">
+            <TextField
+              margin="normal"
+              className="w-[200px] md:w-20 h-12 text-center text-xl border rounded-md mx-1 focus:outline-none"
+              fullWidth
+              type="text"
+              id="otp"
+              label="4-Digits OTP-লিখুন"
+              name="otp"
+              autoComplete="otp"
+              onChange={(e) => handleChange(e)}
+              autoFocus
+            />
+          </div>
         </div>
         <button
           type="submit"
@@ -105,7 +166,16 @@ const verify = () => {
           ভেরিফাই করুন
         </button>
       </form>
-
+      {errors.email !== "" && (
+        <div className="text-center mx-0">
+          <p className="text-red-500 text-lg">{errors.email}</p>
+        </div>
+      )}
+      {errors.otp !== "" && (
+        <div className="text-center mx-0">
+          <p className="text-red-500 text-lg">{errors.otp}</p>
+        </div>
+      )}
       {verificationStatus === "success" && (
         <div className="text-center mx-0">
           <img className="text-center mx-auto my-4" src={veifysucces} alt="" />
