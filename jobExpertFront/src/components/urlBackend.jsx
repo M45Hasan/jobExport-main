@@ -1,5 +1,5 @@
 const url = {
-  apy: "http://localhost:5000",
+  apy: "https://server.jobexpertbd.com",
 };
 
 export default url.apy;

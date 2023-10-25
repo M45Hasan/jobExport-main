@@ -199,9 +199,13 @@ const checkF = async (req, res) => {
   console.log(exampaperid, examineeId);
 
   try {
-    const myQ = await Answer.find({ exampaperid: "185239", examineeId });
+    const myQ = await Answer.find({ exampaperid: exampaperid, examineeId });
+    const my = await ExamPackage.find({
+      packageUid: exampaperid,
+      publish: true,
+    });
     console.log(myQ);
-    if (myQ.length > 0) {
+    if (myQ.length > 0 && my) {
       res.status(200).send(myQ);
     } else {
       res.status(400).json({ error: "User Not found" });

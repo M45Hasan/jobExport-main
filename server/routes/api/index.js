@@ -12,7 +12,7 @@ const {
   imgO,
   myInfo,
   approveTech,
-  delTech
+  delTech,
 } = require("../../controller/regsitrationController");
 const {
   logController,
@@ -101,7 +101,7 @@ _.delete("/submitJobCircular/:id", async (req, res) => {
   }
 });
 // job circular ********************************************** end *********
-
+ 
 const {
   createVideo,
   getVideo,
@@ -187,9 +187,9 @@ _.get("/ssl", responseSSL);
 _.post("/ssl-request", sslRequest);
 _.post("/ssl-payment-success/:tran_id", sslSuccess);
 
-_.post("/ssl-payment-notification/:id", sslNotifiaction);
+_.post("/ssl-payment-notification/:tran_id", sslNotifiaction);
 _.post("/ssl-payment-fail/:tran_id", sslfail);
-_.post("/ssl-payment-cancel/:id", sslCancel);
+_.post("/ssl-payment-cancel/:tran_id", sslCancel);
 
 //quiz start
 
