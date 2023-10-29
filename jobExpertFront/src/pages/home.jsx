@@ -32,11 +32,13 @@ const home = () => {
           বাংলাদেশের ব্যতিক্রমী এবং বৃহৎ Virtual Exam Center (VEC) । বিসিএস ,
           প্রাইমারি, শিক্ষক নিবন্ধনসহ অন্যান্য যে কোন সরকারি চাকরির প্রস্তুতির
           জন্য হাজারো পরীক্ষার্থীর সাথে চূড়ান্ত পরীক্ষার আগেই LIVE মডেল টেস্ট
-          দিয়ে নিজের অবস্থান যাচাই করার এক ভিন্নধর্মী অনলাইন প্ল্যাটফর্ম 
+          দিয়ে নিজের অবস্থান যাচাই করার এক ভিন্নধর্মী অনলাইন প্ল্যাটফর্ম
         </p>
 
         {/* logo image */}
         <img src={logo} alt="" className="mx-auto w-[50%] md:w-[40%] mt-12" />
+        {/* <iframe className="mx-auto  w-full h-[700px] p-4" name="hello"></iframe>
+        <a href="https://weepoka.com/" target="hello">hello</a> */}
         <div className="flex flex-col md:flex-row justify-center items-center gap-5 mt-5">
           <img src={appstore} alt="" className="w-40" />
           <img src={googlestore} alt="" className="w-40" />

@@ -96,10 +96,34 @@ const Admin = () => {
 
   };
 
-  const handleDelete = async (product) => {
 
-    await axios.post(`${apy}/jobExpert/api/v1/deleteuser`, { email: product.email });
+  // delete user start ////
+  const getApplication = async () => {
+    try {
+      const response = await axios.get(`${apy}/jobExpert/api/v1/allUser`);
+
+      if (response.data.length > 0) {
+        setProductsData(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching application data:", error);
+
+    }
   };
+
+  const handleDelete = async (product) => {
+    try {
+      await axios.post(`${apy}/jobExpert/api/v1/deleteuser`, { email: product.email });
+      getApplication();
+    } catch (error) {
+      console.error("Error deleting user:", error);
+
+    }
+  };
+
+
+  // delete user end ////
+  
   const handleDelet = async (product) => {
 
     await axios.post(`${apy}/jobExpert/api/v1/packagedelete`, { packageUid: product.packageUid, nid: product.nid });

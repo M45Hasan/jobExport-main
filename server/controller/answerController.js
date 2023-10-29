@@ -94,8 +94,7 @@ const getFab = async (req, res) => {
 
   try {
     const packageWithQuestions = await User.findOne({
-      email
-      
+      email,
     }).populate({
       path: "myFab",
       populate: {
@@ -261,6 +260,7 @@ const createAnswer = async (req, res) => {
 //   console.log(examTrack, examineeId);
 //   calculateMarks(examTrack, examineeId, res);
 // };
+
 const resultPulish = async (req, res) => {
   const { examTrack, examineeId } = req.body;
 
@@ -307,18 +307,16 @@ const resultPulish = async (req, res) => {
 
     const totalQuestions = rightCount + wrongCount;
     const percentage =
-      totalQuestions > 0 ? (rightCount / totalQuestions) * 100 : 0;
+      totalQuestions > 0 ? Math.floor(rightCount / totalQuestions) * 100 : 0;
 
-    if (percentage >= 85) {
+    if (percentage >= 80 && percentage <= 100) {
       comment = "Excellent";
-    } else if (percentage >= 70) {
-      comment = "Good Shape";
-    } else if (percentage >= 60) {
-      comment = "Need More Efforts";
-    } else if (percentage >= 40) {
-      comment = "Try again & Practice more";
+    } else if (percentage >= 60 && percentage <= 70) {
+      comment = "Good";
+    } else if (percentage >= 40 && percentage <= 50) {
+      comment = "Pass";
     } else {
-      comment = "Keep pushing & Try ...";
+      comment = "Fail";
     }
 
     // Update the Paper document with the calculated results.
